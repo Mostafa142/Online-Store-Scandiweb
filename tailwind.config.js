@@ -6,9 +6,13 @@ module.exports = {
       colors: {
         green: "#5ECE7B",
         gray: "#EEEEEE",
+        lightBlack: "#1D1F22 ",
+        darkGary: "#D3D2D5",
+        darkGreen: "#0F6450",
       },
       fontFamily: {
         raleway: "Raleway",
+        Roboto: "Roboto Condensed",
       },
     },
   },
