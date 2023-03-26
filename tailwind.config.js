@@ -5,6 +5,10 @@ module.exports = {
     extend: {
       colors: {
         green: "#5ECE7B",
+        gray: "#EEEEEE",
+      },
+      fontFamily: {
+        raleway: "Raleway",
       },
     },
   },
