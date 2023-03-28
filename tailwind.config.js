@@ -9,6 +9,8 @@ module.exports = {
         lightBlack: "#1D1F22 ",
         darkGary: "#D3D2D5",
         darkGreen: "#0F6450",
+        darkOrange: "#EA8120",
+        darkBlue: "#15A4C3",
       },
       fontFamily: {
         raleway: "Raleway",

@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+// import Cart from "../Cart/Cart";
 // import Home from "../Home/Home";
 import Product from "../Product/Product";
 
@@ -8,6 +9,7 @@ const RootLayout = () => {
       <Outlet />
       {/* <Home /> */}
       <Product />
+      {/* <Cart /> */}
     </>
   );
 };
