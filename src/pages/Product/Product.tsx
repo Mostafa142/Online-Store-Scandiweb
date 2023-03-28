@@ -1,16 +1,35 @@
 import Navbar from "../../components/Navbar/Navbar";
 import product1 from "../../assets/images/product1.svg";
+import { GetAllCategories } from "../../middlewares/GetAllCategories";
+import { useDispatch } from "react-redux";
+import { GetAllProducts } from "../../middlewares/Products/GetAllProducts";
 
 const Product = () => {
+  const dispatch = useDispatch();
+  const getAll = () => {
+    // dispatch(GetAllProducts());
+  };
   return (
     <div className="md:px-32 px-10 font-raleway">
       <Navbar />
       <div className="grid lg:grid-cols-3 py-5">
         <div className="lg:col-span-2 flex">
           <div className="flex flex-col gap-5 py-5">
-            <img src={product1} alt="product6" className="lg:w-16 md:w-14 w-10" />
-            <img src={product1} alt="product6" className="lg:w-16 md:w-14 w-10" />
-            <img src={product1} alt="product6" className="lg:w-16 md:w-14 w-10" />
+            <img
+              src={product1}
+              alt="product6"
+              className="lg:w-16 md:w-14 w-10"
+            />
+            <img
+              src={product1}
+              alt="product6"
+              className="lg:w-16 md:w-14 w-10"
+            />
+            <img
+              src={product1}
+              alt="product6"
+              className="lg:w-16 md:w-14 w-10"
+            />
           </div>
 
           <div className="py-5 w-5/6 ">
@@ -56,7 +75,10 @@ const Product = () => {
               </p>
             </div>
             <div className="py-5">
-              <button className="uppercase bg-green text-gray font-raleway w-64 py-2 text-center font-semibold">
+              <button
+                // onClick={}
+                className="uppercase bg-green text-gray font-raleway w-64 py-2 text-center font-semibold"
+              >
                 Add To Cart
               </button>
             </div>
