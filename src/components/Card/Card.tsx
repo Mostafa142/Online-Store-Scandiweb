@@ -1,9 +1,9 @@
-import product1 from "../../assets/images/product1.svg";
-import product2 from "../../assets/images/product2.svg";
-import product3 from "../../assets/images/product3.svg";
-import product4 from "../../assets/images/product4.svg";
-import product5 from "../../assets/images/product5.svg";
-import product6 from "../../assets/images/product6.svg";
+import product1 from "../../assets/images/product1.png";
+import product2 from "../../assets/images/product2.png";
+import product3 from "../../assets/images/product3.png";
+import product4 from "../../assets/images/product4.png";
+import product5 from "../../assets/images/product5.png";
+import product6 from "../../assets/images/product6.png";
 const data = [
   {
     id: 1,
@@ -36,7 +36,10 @@ const Card = () => {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1">
         {data.map((item) => {
           return (
-            <div key={item.id} className="p-3 font-raleway flex flex-col my-5 hover:shadow-2xl translate-y-5 transition  duration-300">
+            <div
+              key={item.id}
+              className="p-3 font-raleway flex flex-col my-5 hover:shadow-2xl translate-y-5 transition  duration-300"
+            >
               <img src={item.img} alt="Product Img" />
               <div className="py-5">
                 <h2 className="font-normal text-lg">Apollo Running Short</h2>
