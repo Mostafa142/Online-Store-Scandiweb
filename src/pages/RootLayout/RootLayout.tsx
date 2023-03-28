@@ -1,13 +1,15 @@
 import { Outlet } from "react-router-dom";
+import Cart from "../Cart/Cart";
 // import Home from "../Home/Home";
-import Product from "../Product/Product";
+// import Product from "../Product/Product";
 
 const RootLayout = () => {
   return (
     <>
       <Outlet />
       {/* <Home /> */}
-      <Product />
+      {/* <Product /> */}
+      <Cart />
     </>
   );
 };
