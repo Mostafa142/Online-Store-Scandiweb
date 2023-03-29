@@ -1,17 +1,13 @@
 import { Outlet } from "react-router-dom";
-// import Cart from "../Cart/Cart";
-import Home from "../Home/Home";
-// import Product from "../Product/Product";
+import Navbar from "../../components/Navbar/Navbar";
 
 const RootLayout = () => {
   return (
     <>
-      <Outlet />
-     
-     
-      <Home />
-      {/* <Product /> */}
-      {/* <Cart /> */}
+      <div className="md:px-32 px-10">
+        <Navbar />
+        <Outlet />
+      </div>
     </>
   );
 };

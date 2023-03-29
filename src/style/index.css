@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.active{
+  color:#5ECE7B
+}
 .card:hover .cart {
   display: flex;
 }

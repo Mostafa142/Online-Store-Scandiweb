@@ -61,15 +61,14 @@ const Navbar = () => {
   return (
     <>
       <nav className="flex justify-between py-5 items-center">
-        
         <div className="md:flex gap-10 items-center hidden">
-          <NavLink to="#">
+          <NavLink to="/Women">
             <p className="uppercase">women</p>
           </NavLink>
-          <NavLink to="#">
+          <NavLink to="/Men">
             <p className="uppercase">men</p>
           </NavLink>
-          <NavLink to="#">
+          <NavLink to="/Kids">
             <p className="uppercase">kids</p>
           </NavLink>
         </div>
@@ -95,7 +94,9 @@ const Navbar = () => {
                     key={item.name}
                     className="flex font-semibold py-2 px-7 hover:bg-gray cursor-pointer"
                   >
-                    <p>{`${item.icon} ${item.name}`}</p>
+                    <p
+                      onClick={() => setShowCurrency(!showCurrency)}
+                    >{`${item.icon} ${item.name}`}</p>
                   </div>
                 );
               })}
@@ -185,13 +186,13 @@ const Navbar = () => {
                           <img
                             src={plus}
                             alt="Plus"
-                            className="cursor-pointer w-6 h-6"
+                            className="cursor-pointer w-6 h-6 hover:bg-green"
                           />
                           <p className="font-medium text-lg">{item.amount}</p>
                           <img
                             src={minus}
                             alt="Minus"
-                            className="cursor-pointer w-6 h-6 "
+                            className="cursor-pointer w-6 h-6 hover:bg-green "
                           />
                         </div>
                         <div>
@@ -214,10 +215,14 @@ const Navbar = () => {
                 </div>
 
                 <div className="grid grid-cols-2 font-raleway font-semibold text-sm gap-5">
-                  <button className="uppercase border border-1 border-lightBlack py-2">
+                  <NavLink
+                    to="/Cart"
+                    className="uppercase border border-1 border-lightBlack py-2 text-center hover:bg-black hover:text-white"
+                    onClick={() => setShowCart(!showCart)}
+                  >
                     view bag
-                  </button>
-                  <button className="uppercase border border-1 border-transparent bg-green py-2 text-white">
+                  </NavLink>
+                  <button className="uppercase border border-1 border-transparent bg-green py-2 text-white hover:bg-white hover:text-green hover:border-green">
                     check out
                   </button>
                 </div>
@@ -236,19 +241,18 @@ const Navbar = () => {
             onClick={() => setShowMenu(!showMenu)}
           />
         </div>
-
       </nav>
 
       {showMenu ? (
         <div className="flex flex-col items-center md:hidden gap-8">
           <div className="flex gap-5 items-center ">
-            <NavLink to="#">
+            <NavLink to="/Women">
               <p className="uppercase">women</p>
             </NavLink>
-            <NavLink to="#">
+            <NavLink to="/Men">
               <p className="uppercase">men</p>
             </NavLink>
-            <NavLink to="#">
+            <NavLink to="/Kids">
               <p className="uppercase">kids</p>
             </NavLink>
           </div>
@@ -270,7 +274,9 @@ const Navbar = () => {
                       key={item.name}
                       className="flex font-semibold py-2 px-7 hover:bg-gray cursor-pointer "
                     >
-                      <p>{`${item.icon} ${item.name}`}</p>
+                      <p
+                        onClick={() => setShowCurrency(!showCurrency)}
+                      >{`${item.icon} ${item.name}`}</p>
                     </div>
                   );
                 })}
@@ -360,13 +366,13 @@ const Navbar = () => {
                             <img
                               src={plus}
                               alt="Plus"
-                              className="cursor-pointer w-6 h-6"
+                              className="cursor-pointer w-6 h-6 hover:bg-green"
                             />
                             <p className="font-medium text-lg">{item.amount}</p>
                             <img
                               src={minus}
                               alt="Minus"
-                              className="cursor-pointer w-6 h-6 "
+                              className="cursor-pointer w-6 h-6 hover:bg-green "
                             />
                           </div>
                           <div>
@@ -389,10 +395,14 @@ const Navbar = () => {
                   </div>
 
                   <div className="grid grid-cols-2 font-raleway font-semibold text-sm gap-5">
-                    <button className="uppercase border border-1 border-lightBlack py-2">
+                    <NavLink
+                      to="/Cart"
+                      className="uppercase border border-1 border-lightBlack py-2 text-center hover:bg-black hover:text-white"
+                      onClick={() => setShowCart(!showCart)}
+                    >
                       view bag
-                    </button>
-                    <button className="uppercase border border-1 border-transparent bg-green py-2 text-white">
+                    </NavLink>
+                    <button className="uppercase border border-1 border-transparent bg-green py-2 text-white hover:bg-white hover:text-green hover:border-green">
                       check out
                     </button>
                   </div>
@@ -406,7 +416,6 @@ const Navbar = () => {
       ) : (
         ""
       )}
-
     </>
   );
 };
