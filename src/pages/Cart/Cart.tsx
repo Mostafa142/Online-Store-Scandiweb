@@ -1,4 +1,3 @@
-import Navbar from "../../components/Navbar/Navbar";
 import product1 from "../../assets/images/product8.png";
 import product2 from "../../assets/images/product7.png";
 import plus from "../../assets/images/plus.svg";
@@ -36,15 +35,14 @@ const Cart = () => {
     },
   ];
   return (
-    <div className="md:px-32 px-10 font-raleway">
-      <Navbar />
+    <div className="font-raleway">
       <div className="mb-32">
         <h2 className="uppercase font-bold text-3xl my-10">Cart</h2>
         <div className="w-full border border-gray"></div>
         {Products.map((item) => {
           return (
-            <>
-              <div key={item.id} className="flex justify-between py-5">
+            <div key={item.id}>
+              <div className="flex sm:flex-row flex-col sm:items-center gap-10 justify-between py-5">
                 <div>
                   <div>
                     {/* Header */}
@@ -62,9 +60,10 @@ const Cart = () => {
                       size:
                     </p>
                     <div className="flex gap-3">
-                      {item.AvailableSizes.map((size) => {
+                      {item.AvailableSizes.map((size, index) => {
                         return (
                           <p
+                            key={index}
                             className={`uppercase w-14 text-center py-2 border text-sm cursor-pointer ${
                               size === item.ChosenSize
                                 ? "bg-lightBlack text-white"
@@ -83,21 +82,20 @@ const Cart = () => {
                       color:
                     </p>
                     <div className="flex gap-2">
-                      {item.AvailableColors.map((color) => {
+                      {item.AvailableColors.map((color, index) => {
                         return (
-                          <>
+                          <div
+                            key={index}
+                            className={`p-px border border-1 ${
+                              color === item.ChosenColor
+                                ? "border-green"
+                                : "border-transparent"
+                            } cursor-pointer`}
+                          >
                             <p
-                              className={`p-px border border-1 ${
-                                color === item.ChosenColor
-                                  ? "border-green"
-                                  : "border-transparent"
-                              } cursor-pointer`}
-                            >
-                              <p
-                                className={`uppercase text-sm w-8 h-8   bg-${color} `}
-                              ></p>
-                            </p>
-                          </>
+                              className={`uppercase text-sm w-8 h-8   bg-${color} `}
+                            ></p>
+                          </div>
                         );
                       })}
                     </div>
@@ -106,9 +104,17 @@ const Cart = () => {
                 {/* Amount */}
                 <div className="flex gap-5 font-raleway font-medium text-3xl">
                   <div className="flex flex-col items-center justify-between">
-                    <img src={plus} alt="Plus" className="cursor-pointer" />
+                    <img
+                      src={plus}
+                      alt="Plus"
+                      className="cursor-pointer hover:bg-green "
+                    />
                     <p>{item.amount}</p>
-                    <img src={minus} alt="Minus" className="cursor-pointer" />
+                    <img
+                      src={minus}
+                      alt="Minus"
+                      className="cursor-pointer hover:bg-green"
+                    />
                   </div>
                   <div className="relative">
                     <img
@@ -132,20 +138,20 @@ const Cart = () => {
                 </div>
               </div>
               <div className="w-full border border-gray"></div>
-            </>
+            </div>
           );
         })}
         <div className="my-10 flex flex-col gap-2">
-          <div className="grid grid-cols-12">
-            <span className="text-xl ">Tax 21%: </span>
+          <div className="flex gap-5">
+            <span className="text-xl w-20">Tax 21%: </span>
             <span className="font-bold text-xl">$42.00</span>
           </div>
-          <div className="grid grid-cols-12">
-            <span className="text-xl ">Quantity: </span>
+          <div className="flex gap-5">
+            <span className="text-xl w-20">Quantity: </span>
             <span className="font-bold text-xl">3</span>
           </div>
-          <div className="grid grid-cols-12">
-            <span className="text-xl  font-semibold">Total: </span>
+          <div className="flex gap-5">
+            <span className="text-xl  font-semibold w-20">Total: </span>
             <span className="font-extrabold text-xl">$200.00</span>
           </div>
           <div>

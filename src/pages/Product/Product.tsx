@@ -10,8 +10,7 @@ const Product = () => {
     // dispatch(GetAllProducts());
   };
   return (
-    <div className="md:px-32 px-10 font-raleway">
-      <Navbar />
+    <div className="font-raleway">
       <div className="grid lg:grid-cols-3 py-5">
         <div className="lg:col-span-2 flex ">
           <div className="flex flex-col gap-5 py-5 pr-5">

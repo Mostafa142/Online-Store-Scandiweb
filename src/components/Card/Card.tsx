@@ -1,38 +1,11 @@
-import product1 from "../../assets/images/product1.png";
-import product2 from "../../assets/images/product2.png";
-import product3 from "../../assets/images/product3.png";
-import product4 from "../../assets/images/product4.png";
-import product5 from "../../assets/images/product5.png";
-import product6 from "../../assets/images/product6.png";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import greenCart from "../../assets/images/greenCart.svg";
-
-const data = [
-  {
-    id: 1,
-    img: product1,
-  },
-  {
-    id: 2,
-    img: product2,
-  },
-  {
-    id: 3,
-    img: product3,
-  },
-  {
-    id: 4,
-    img: product4,
-  },
-  {
-    id: 5,
-    img: product5,
-  },
-  {
-    id: 6,
-    img: product6,
-  },
-];
-const Card = () => {
+import { IProduct } from "../../models/interfaces/Product";
+type Props = {
+  data: IProduct[];
+};
+const Card: React.FC<Props> = ({ data }) => {
   return (
     <>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1">
@@ -42,15 +15,20 @@ const Card = () => {
               key={item.id}
               className="card p-3 font-raleway flex flex-col my-5 hover:shadow-2xl translate-y-5 transition  duration-300 cursor-pointer"
             >
-              <img src={item.img} alt="Product Img" />
+              <NavLink to="/Product">
+                <img src={item.img} alt="Product Img" className="w-full" />
+              </NavLink>
 
-              <div className="cart relative cursor-pointer hidden transition duration-300">
+              <NavLink
+                to="/Product"
+                className="cart relative cursor-pointer hidden transition duration-300"
+              >
                 <img
                   src={greenCart}
                   alt="Cart"
                   className="absolute -bottom-10 right-0 md:w-16 md:h-16 md:-bottom-9"
                 />
-              </div>
+              </NavLink>
 
               <div className="py-5">
                 <h2 className="font-normal text-lg">Apollo Running Short</h2>

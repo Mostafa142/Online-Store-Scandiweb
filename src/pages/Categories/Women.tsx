@@ -6,8 +6,7 @@ import product4 from "../../assets/images/product4.png";
 import product5 from "../../assets/images/product5.png";
 import product6 from "../../assets/images/product6.png";
 import { IProduct } from "../../models/interfaces/Product";
-
-const Home = () => {
+const Women = () => {
   const data: IProduct[] = [
     {
       id: 1,
@@ -35,11 +34,11 @@ const Home = () => {
     },
   ];
   return (
-    <div>
-      <div className="font-raleway  text-4xl my-16">All Products</div>
+    <>
+      <h1 className="font-raleway  text-4xl my-16">Women's Category</h1>
       <Card data={data} />
-    </div>
+    </>
   );
 };
 
-export default Home;
+export default Women;
