@@ -1,4 +1,4 @@
 export interface IProduct {
-    id: number;
-    img: string;
+  id: number;
+  img: string;
 }

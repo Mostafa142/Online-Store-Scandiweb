@@ -6,7 +6,7 @@ import product5 from "../../assets/images/product5.png";
 import product6 from "../../assets/images/product6.png";
 import { IProduct } from "../../models/interfaces/Product";
 
-const Men = () => {
+const Clothes = () => {
   const data: IProduct[] = [
     {
       id: 1,
@@ -31,10 +31,10 @@ const Men = () => {
   ];
   return (
     <>
-      <h1 className="font-raleway  text-4xl my-16">Men's Category</h1>
-      <Card data={data} />
+      <h1 className="font-raleway  text-4xl my-16">Clothes' Category</h1>
+      {/* <Card data={data} /> */}
     </>
   );
 };
 
-export default Men;
+export default Clothes;

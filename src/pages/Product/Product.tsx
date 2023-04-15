@@ -1,14 +1,5 @@
-import Navbar from "../../components/Navbar/Navbar";
-import { GetAllCategories } from "../../middlewares/GetAllCategories";
-import { useDispatch } from "react-redux";
-import { GetAllProducts } from "../../middlewares/Products/GetAllProducts";
 import product1 from "../../assets/images/product1.png";
-
 const Product = () => {
-  const dispatch = useDispatch();
-  const getAll = () => {
-    // dispatch(GetAllProducts());
-  };
   return (
     <div className="font-raleway">
       <div className="grid lg:grid-cols-3 py-5">
