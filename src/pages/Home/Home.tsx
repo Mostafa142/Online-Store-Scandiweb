@@ -4,7 +4,7 @@ import { ALL_CATEGORY } from "../../Queries/Queries";
 
 const Home = () => {
   const { loading, error, data } = useQuery(ALL_CATEGORY);
-
+  // console.log(data.category);
   if (loading) return <>Loading...</>;
   if (error) return <>Error! ${error.message}</>;
   return (
