@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import greenCart from "../../assets/images/greenCart.svg";
-import { IProduct } from "../../models/interfaces/Product";
 import { IProducts } from "../../models/interfaces/categories";
 type Props = {
   data: IProducts[];
