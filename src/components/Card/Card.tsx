@@ -2,8 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import greenCart from "../../assets/images/greenCart.svg";
 import { IProduct } from "../../models/interfaces/Product";
+import { IProducts } from "../../models/interfaces/categories";
 type Props = {
-  data: IProduct[];
+  data: IProducts[];
 };
 const Card: React.FC<Props> = ({ data }) => {
   return (
@@ -15,8 +16,12 @@ const Card: React.FC<Props> = ({ data }) => {
               key={item.id}
               className="card p-3 font-raleway flex flex-col my-5 hover:shadow-2xl translate-y-5 transition  duration-300 cursor-pointer"
             >
-              <NavLink to="/Product">
-                <img src={item.img} alt="Product Img" className="w-full" />
+              <NavLink to="/Product" className={'flex justify-center items-center'}>
+                <img
+                  src={item.gallery[0]}
+                  alt="Product Img"
+                  className="h-[300px]"
+                />
               </NavLink>
 
               <NavLink

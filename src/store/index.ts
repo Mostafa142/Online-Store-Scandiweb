@@ -6,5 +6,5 @@ const store = configureStore({
   reducer: { products: ProductsReducer },
 });
 
-store.dispatch(GetAllProducts());
+// store.dispatch(GetAllProducts());
 export default store;

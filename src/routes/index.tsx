@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Cart from "../pages/Cart/Cart";
 import Kids from "../pages/Categories/Kids";
-import Men from "../pages/Categories/Men";
-import Women from "../pages/Categories/Women";
+import Clothes from "../pages/Categories/Clothes";
+import Tech from "../pages/Categories/Tech";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import Product from "../pages/Product/Product";
@@ -15,9 +15,9 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/Women", element: <Women /> },
-      { path: "/Men", element: <Men /> },
-      { path: "/Kids", element: <Kids /> },
+      { path: "/Tech", element: <Tech /> },
+      { path: "/Clothes", element: <Clothes /> },
+      // { path: "/Kids", element: <Kids /> },
       { path: "/Cart", element: <Cart /> },
       { path: "/Product", element: <Product /> },
     ],
