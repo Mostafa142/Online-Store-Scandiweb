@@ -6,7 +6,7 @@ type Props = {
   data: IProducts[];
 };
 const Card: React.FC<Props> = ({ data }) => {
-  
+  console.log(data);
   return (
     <>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1">
@@ -41,7 +41,7 @@ const Card: React.FC<Props> = ({ data }) => {
               <div className="py-5">
                 <h2 className="font-normal text-lg">{item.name}</h2>
                 <p className="font-semibold text-lg">
-                  {item.prices[0].currency.symbol+ " " + item.prices[0].amount}
+                  {item.prices[0].currency.symbol + " " + item.prices[0].amount}
                 </p>
               </div>
             </div>
