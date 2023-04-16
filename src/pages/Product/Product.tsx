@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 import { useState } from "react";
+import { isElementType } from "@testing-library/user-event/dist/utils";
 const Product = () => {
   const params = useParams();
   // console.log(params)
@@ -17,36 +18,17 @@ const Product = () => {
       <div className="grid lg:grid-cols-3 py-5">
         <div className="lg:col-span-2 flex ">
           <div className="flex flex-col gap-5 py-5 pr-5">
-            <img
-              src={
-                data.product.gallery.length === 1
-                  ? data.product.gallery[0]
-                  : data.product.gallery[1]
-              }
-              alt="product6"
-              className="lg:w-16 md:w-14 w-10 cursor-pointer"
-              onClick={(e) => setSelectedProduct(data.product.gallery[1])}
-            />
-            <img
-              src={
-                data.product.gallery.length === 1
-                  ? data.product.gallery[0]
-                  : data.product.gallery[2]
-              }
-              alt="product6"
-              className="lg:w-16 md:w-14 w-10 cursor-pointer"
-              onClick={(e) => setSelectedProduct(data.product.gallery[2])}
-            />
-            <img
-              src={
-                data.product.gallery.length === 1
-                  ? data.product.gallery[0]
-                  : data.product.gallery[3]
-              }
-              alt="product6"
-              className="lg:w-16 md:w-14 w-10 cursor-pointer"
-              onClick={(e) => setSelectedProduct(data.product.gallery[3])}
-            />
+            {data.product.gallery.map((item: any) => {
+              return (
+                <img
+                  key={item.id}
+                  src={item}
+                  alt="product6"
+                  className="lg:w-16 md:w-14 w-10 cursor-pointer"
+                  onClick={(e) => setSelectedProduct(item)}
+                />
+              );
+            })}
           </div>
 
           <div className="py-5 w-5/6 ">
