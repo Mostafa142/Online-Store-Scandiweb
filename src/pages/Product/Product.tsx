@@ -1,5 +1,15 @@
+import { useParams } from "react-router-dom";
 import product1 from "../../assets/images/product1.png";
+import { useQuery } from "@apollo/client";
+import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 const Product = () => {
+  const params = useParams();
+  const { loading, error, data } = useQuery(GET_CERTAIN_PRODUCT, {
+    variables: { id: params.id },
+  });
+  console.log(data);
+  if (loading) return null;
+  if (error) return <>{`Error! ${error}`}</>;
   return (
     <div className="font-raleway">
       <div className="grid lg:grid-cols-3 py-5">
