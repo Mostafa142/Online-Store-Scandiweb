@@ -9,11 +9,19 @@ export interface IProducts {
   inStock: boolean;
   description: string;
   gallery: string[];
-  attributes: {
-    id: string;
-    name: string;
-    type: string;
-    items: { id: string; displayValue: string; value: string }[];
-  }[];
+  attributes: IAttribute[];
   prices: { currency: { label: string; symbol: string }; amount: number }[];
+}
+
+export interface IAttribute {
+  id: string;
+  name: string;
+  type: string;
+  items: IItem[];
+}
+
+export interface IItem {
+  id: string;
+  displayValue: string;
+  value: string;
 }

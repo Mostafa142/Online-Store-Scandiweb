@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 import { useState } from "react";
+import { IAttribute, IItem } from "../../models/interfaces/categories";
 // import { isElementType } from "@testing-library/user-event/dist/utils";
 const Product = () => {
   const params = useParams();
@@ -11,7 +12,6 @@ const Product = () => {
   });
   const [selectedProduct, setSelectedProduct] = useState("");
 
-  const [selectedColor, setSelectedColor] = useState(false);
   console.log(data);
   if (loading) return null;
   if (error) return <>{`Error! ${error}`}</>;
@@ -50,40 +50,68 @@ const Product = () => {
             <p className="text-3xl text-lightBlack">{data.product.brand}</p>
           </div>
           <div className="py-10 font-Roboto">
-            {data.product.attributes.map((item: any, idx: any) => {
+            {/* ATTRIBUTES  */}
+
+            {data.product.attributes.map((item: IAttribute) => {
               return (
                 <div
-                  className="uppercase font-bold pb-2 text-lightBlack "
-                  key={idx}
+                  className="uppercase font-bold pb-2 text-lightBlack"
+                  key={item.id}
                 >
-                  <h3>{item.name}</h3>
-                  <div className="flex gap-3">
-                    {item.items.map((el: any, idx: any) => {
-                      return (
-                        <div
-                          key={idx}
-                          className={`cursor-pointer border ${
-                            selectedColor ? "border-green" : "border-black"
+                  {/* Colors  */}
+                  {item.name === "Color" ? (
+                    <div className="pb-3">
+                      <h3>{item.name}</h3>
+                      <div className="flex gap-3">
+                        {item.items.map((ele) => (
+                          <div
+                            key={ele.id}
+                            className={`cursor-pointer border-2 border-[#eee] hover:border-green`}
+                          >
+                            <p
+                              className={`uppercase border text-sm w-8 h-8 border-none bg-[${ele.value}] cursor-pointer`}
+                            ></p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="pb-3">
+                      <h3>{item.name}</h3>
+                      <div className="flex gap-3">
+                        {item.items.map((ele) => (
+                          <div key={ele.id}>
+                            <p className="uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white">
+                              {ele.value}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* {item.items.map((el: IItem) => {
+                    return (
+                      <div
+                        key={el.id}
+                        className={`cursor-pointer border border-black`}
+                      >
+                        <p
+                          className={`uppercase w-14 text-center py-2  m-0.5 text-sm ${
+                            item.name === "Color"
+                              ? `bg-[${el.value}] py-5`
+                              : "bg-transparent hover:bg-black hover:text-white"
                           }`}
                         >
-                          <p
-                            className={`uppercase w-14 text-center py-2  m-0.5 text-sm   ${
-                              item.name === "Color"
-                                ? `bg-[${el.value}] py-5`
-                                : "bg-transparent hover:bg-black hover:text-white"
-                            }`}
-                            onClick={() => setSelectedColor(!selectedColor)}
-                          >
-                            {item.name === "Size"
-                              ? el.value
-                              : item.name === "Color"
-                              ? ""
-                              : el.displayValue}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
+                          {item.name === "Size"
+                            ? el.value
+                            : item.name === "Color"
+                            ? ""
+                            : el.displayValue}
+                        </p>
+                      </div>
+                    );
+                  })} */}
                 </div>
               );
             })}
