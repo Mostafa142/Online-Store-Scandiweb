@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 import { useState } from "react";
-import { isElementType } from "@testing-library/user-event/dist/utils";
+// import { isElementType } from "@testing-library/user-event/dist/utils";
 const Product = () => {
   const params = useParams();
   // console.log(params)
@@ -10,6 +10,8 @@ const Product = () => {
     variables: { id: params.id },
   });
   const [selectedProduct, setSelectedProduct] = useState("");
+
+  const [selectedColor, setSelectedColor] = useState(false);
   console.log(data);
   if (loading) return null;
   if (error) return <>{`Error! ${error}`}</>;
@@ -18,10 +20,10 @@ const Product = () => {
       <div className="grid lg:grid-cols-3 py-5">
         <div className="lg:col-span-2 flex ">
           <div className="flex flex-col gap-5 py-5 pr-5">
-            {data.product.gallery.map((item: any) => {
+            {data.product.gallery.map((item: any, idx: any) => {
               return (
                 <img
-                  key={item.id}
+                  key={idx}
                   src={item}
                   alt="product6"
                   className="lg:w-16 md:w-14 w-10 cursor-pointer"
@@ -48,33 +50,44 @@ const Product = () => {
             <p className="text-3xl text-lightBlack">{data.product.brand}</p>
           </div>
           <div className="py-10 font-Roboto">
-            {/* Sizes */}
-            <div>
-              <p className="uppercase font-bold pb-2 text-lightBlack">size:</p>
-              <div className="flex gap-3">
-                <p className="uppercase w-14 text-center py-2 border text-sm  cursor-pointer">
-                  xs
-                </p>
-                <p className="uppercase w-14 text-center py-2 border text-sm cursor-pointer bg-lightBlack text-gray">
-                  s
-                </p>
-                <p className="uppercase w-14 text-center py-2 border text-sm  cursor-pointer">
-                  m
-                </p>
-                <p className="uppercase w-14 text-center py-2 border text-sm  cursor-pointer">
-                  l
-                </p>
-              </div>
-            </div>
-            {/* Colors */}
-            <div className="py-6">
-              <p className="uppercase font-bold pb-2 text-lightBlack">color:</p>
-              <div className="flex gap-2">
-                <p className="uppercase border text-sm w-8 h-8 border-none bg-darkGary cursor-pointer "></p>
-                <p className="uppercase border text-sm w-8 h-8 border-none bg-lightBlack cursor-pointer"></p>
-                <p className="uppercase border text-sm w-8 h-8 border-none bg-darkGreen  cursor-pointer"></p>
-              </div>
-            </div>
+            {data.product.attributes.map((item: any, idx: any) => {
+              return (
+                <div
+                  className="uppercase font-bold pb-2 text-lightBlack "
+                  key={idx}
+                >
+                  <h3>{item.name}</h3>
+                  <div className="flex gap-3">
+                    {item.items.map((el: any, idx: any) => {
+                      return (
+                        <div
+                          key={idx}
+                          className={`cursor-pointer border ${
+                            selectedColor ? "border-green" : "border-black"
+                          }`}
+                        >
+                          <p
+                            className={`uppercase w-14 text-center py-2  m-0.5 text-sm   ${
+                              item.name === "Color"
+                                ? `bg-[${el.value}] py-5`
+                                : "bg-transparent hover:bg-black hover:text-white"
+                            }`}
+                            onClick={() => setSelectedColor(!selectedColor)}
+                          >
+                            {item.name === "Size"
+                              ? el.value
+                              : item.name === "Color"
+                              ? ""
+                              : el.displayValue}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+
             {/* Prices */}
             <div>
               <p className="uppercase font-bold pb-2 text-lightBlack">price:</p>

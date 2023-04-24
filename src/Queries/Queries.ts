@@ -79,6 +79,14 @@ export const GET_CERTAIN_PRODUCT = gql`
       inStock
       description
       category
+      attributes {
+        name
+        type
+        items {
+          value
+          displayValue
+        }
+      }
       prices {
         currency {
           label
