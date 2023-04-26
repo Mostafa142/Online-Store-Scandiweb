@@ -80,11 +80,13 @@ export const GET_CERTAIN_PRODUCT = gql`
       description
       category
       attributes {
+        id
         name
         type
         items {
           value
           displayValue
+          id
         }
       }
       prices {

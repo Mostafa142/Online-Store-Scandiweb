@@ -1,18 +1,60 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
-import { useState } from "react";
-import { IAttribute, IItem } from "../../models/interfaces/categories";
-// import { isElementType } from "@testing-library/user-event/dist/utils";
+import { useState, useEffect } from "react";
+import {
+  IAttribute,
+  IItem,
+  IProducts,
+} from "../../models/interfaces/categories";
+import { toast } from "react-toastify";
+import { ATTRIBUTES } from "../../models/enums/attributes";
+
 const Product = () => {
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [product, setProduct] = useState<IProducts>({
+    id: "",
+    attributes: [],
+    description: "",
+    gallery: [],
+    inStock: false,
+    itemCount: 0,
+    name: "",
+    prices: [],
+  });
   const params = useParams();
-  // console.log(params)
   const { loading, error, data } = useQuery(GET_CERTAIN_PRODUCT, {
     variables: { id: params.id },
   });
-  const [selectedProduct, setSelectedProduct] = useState("");
-
   console.log(data);
+  console.log(product);
+
+  const updateAttributes = (itemId: string, attrId: string) => {
+    setProduct({
+      ...product,
+      attributes: product.attributes.map((attr: IAttribute) =>
+        attr && attr.id === attrId ? { ...attr, selected: itemId } : attr
+      ),
+    });
+  };
+  useEffect(() => {
+    if (data) {
+      setProduct({
+        ...data.product,
+        attributes: data.product.attributes.map((attr: any) =>
+          attr
+            ? {
+                ...attr,
+                selected:
+                  attr.items[0].id ||
+                  attr.items.map((i: any) => i.id === attr.selected),
+              }
+            : attr
+        ),
+        itemCount: 0,
+      });
+    }
+  }, [data]);
   if (loading) return null;
   if (error) return <>{`Error! ${error}`}</>;
   return (
@@ -52,44 +94,139 @@ const Product = () => {
           <div className="py-10 font-Roboto">
             {/* ATTRIBUTES  */}
 
-            {data.product.attributes.map((item: IAttribute) => {
+            {data.product.attributes.map((attr: IAttribute) => {
               return (
                 <div
                   className="uppercase font-bold pb-2 text-lightBlack"
-                  key={item.id}
+                  key={attr.id}
                 >
                   {/* Colors  */}
-                  {item.name === "Color" ? (
+                  {attr.name === ATTRIBUTES.Color ? (
                     <div className="pb-3">
-                      <h3>{item.name}</h3>
+                      <h3>{attr.name}</h3>
                       <div className="flex gap-3">
-                        {item.items.map((ele) => (
-                          <div
-                            key={ele.id}
-                            className={`cursor-pointer border-2 border-[#eee] hover:border-green`}
-                          >
-                            <p
-                              className={`uppercase border text-sm w-8 h-8 border-none bg-[${ele.value}] cursor-pointer`}
-                            ></p>
-                          </div>
+                        {attr.items.map((color) => (
+                          <p
+                            key={color.id}
+                            onClick={() => {
+                              updateAttributes(color.id, attr.id);
+                              toast.info(
+                                `${attr.name + " " + color.id} Selected`,
+                                {
+                                  autoClose: false,
+                                }
+                              );
+                            }}
+                            id={color.id}
+                            className={`uppercase border text-sm w-8 h-8  bg-[${color.value}] cursor-pointer border-2 border-[#eee] hover:border-green active:border-green `}
+                          ></p>
                         ))}
                       </div>
                     </div>
-                  ) : (
+                  ) : null}
+                  {/* Capacity */}
+                  {attr.name === ATTRIBUTES.Capacity ? (
                     <div className="pb-3">
-                      <h3>{item.name}</h3>
+                      <h3>{attr.name}</h3>
                       <div className="flex gap-3">
-                        {item.items.map((ele) => (
-                          <div key={ele.id}>
-                            <p className="uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white">
-                              {ele.value}
+                        {attr.items.map((Capacity) => (
+                          <div key={Capacity.id}>
+                            <p
+                              onClick={() => {
+                                updateAttributes(Capacity.id, attr.id);
+                                toast.info(
+                                  `${attr.name + " " + Capacity.id} Selected`,
+                                  {
+                                    autoClose: false,
+                                  }
+                                );
+                              }}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                            >
+                              {Capacity.value}
                             </p>
                           </div>
                         ))}
                       </div>
                     </div>
-                  )}
-
+                  ) : null}
+                  {attr.name === ATTRIBUTES.WithPorts ? (
+                    <div className="pb-3">
+                      <h3>{attr.name}</h3>
+                      <div className="flex gap-3">
+                        {attr.items.map((withPorts) => (
+                          <div key={withPorts.id}>
+                            <p
+                              onClick={() => {
+                                updateAttributes(withPorts.id, attr.id);
+                                toast.info(
+                                  `${attr.name + " " + withPorts.id} Selected`,
+                                  {
+                                    autoClose: false,
+                                  }
+                                );
+                              }}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                            >
+                              {withPorts.value}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                  {attr.name === ATTRIBUTES.TouchKeyboard ? (
+                    <div className="pb-3">
+                      <h3>{attr.name}</h3>
+                      <div className="flex gap-3">
+                        {attr.items.map((touchKeyBoard) => (
+                          <div key={touchKeyBoard.id}>
+                            <p
+                              onClick={() => {
+                                updateAttributes(touchKeyBoard.id, attr.id);
+                                toast.info(
+                                  `${
+                                    attr.name + " " + touchKeyBoard.id
+                                  } Selected`,
+                                  {
+                                    autoClose: false,
+                                  }
+                                );
+                              }}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                            >
+                              {touchKeyBoard.value}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                  {attr.name === ATTRIBUTES.Size ? (
+                    <div className="pb-3">
+                      <h3>{attr.name}</h3>
+                      <div className="flex gap-3">
+                        {attr.items.map((size) => (
+                          <div key={size.id}>
+                            <p
+                              onClick={() => {
+                                updateAttributes(size.id, attr.id);
+                                toast.info(
+                                  `${attr.name + " " + size.id} Selected`,
+                                  {
+                                    autoClose: false,
+                                  }
+                                );
+                              }}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                            >
+                              {size.value}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
                   {/* {item.items.map((el: IItem) => {
                     return (
                       <div
