@@ -29,15 +29,21 @@ const Product = () => {
   console.log(data);
   console.log(product);
 
+  // it takes itemId that referes to what user choose like(40 or 41)
+  // and attributeId referes to what attribute i want to change like (size or color)
+
   const updateAttributes = (itemId: string, attrId: string) => {
     setProduct({
       ...product,
+      // check if the attribute is already existe or not and if it is exist it will
+      // check if it is the same of the attribute that i want to update
       attributes: product.attributes.map((attr: IAttribute) =>
         attr && attr.id === attrId ? { ...attr, selected: itemId } : attr
       ),
     });
   };
   useEffect(() => {
+    // making copy of data with initial attributes values
     if (data) {
       setProduct({
         ...data.product,
@@ -226,6 +232,8 @@ const Product = () => {
                         ))}
                       </div>
                     </div>
+                  ) : (
+                    ""
                   )}
 
                   {/* {item.items.map((el: IItem) => {
