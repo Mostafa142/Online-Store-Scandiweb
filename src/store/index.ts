@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { GetAllProducts } from "../middlewares/Products/GetAllProducts";
-import { ProductsReducer } from "../slices/Products.slice";
+import { CartReducer } from "../slices/Cart.slice";
 // This is our Store
 const store = configureStore({
-  reducer: { products: ProductsReducer },
+  reducer: { cart: CartReducer },
 });
 
-// store.dispatch(GetAllProducts());
 export default store;

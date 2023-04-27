@@ -9,8 +9,19 @@ import {
 } from "../../models/interfaces/categories";
 import { toast } from "react-toastify";
 import { ATTRIBUTES } from "../../models/enums/attributes";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, incrementCartCounter } from "../../slices/Cart.slice";
+import Alert from "../../components/Alert/Alert";
 
 const Product = () => {
+  const dispatch = useDispatch();
+  const { cartList, cartCounter } = useSelector(
+    (state: { cart: { cartList: IProducts[]; cartCounter: number } }) =>
+      state.cart
+  );
+  console.log("====================================");
+  console.log(cartList, cartCounter);
+  console.log("====================================");
   const [selectedProduct, setSelectedProduct] = useState("");
   const [product, setProduct] = useState<IProducts>({
     id: "",
@@ -26,8 +37,6 @@ const Product = () => {
   const { loading, error, data } = useQuery(GET_CERTAIN_PRODUCT, {
     variables: { id: params.id },
   });
-  console.log(data);
-  console.log(product);
 
   const updateAttributes = (itemId: string, attrId: string) => {
     setProduct({
@@ -36,6 +45,26 @@ const Product = () => {
         attr && attr.id === attrId ? { ...attr, selected: itemId } : attr
       ),
     });
+  };
+
+  const addToCartList = () => {
+    const filteredProducts = cartList.filter(
+      (el) =>
+        el.id === product.id &&
+        el.attributes.every((selec, i) => {
+          return selec.selected === product.attributes[i]?.selected;
+        })
+    );
+
+    if (filteredProducts.length === 0) {
+      dispatch(incrementCartCounter());
+      dispatch(addToCart({ cartItem: { ...product, itemCount: 1 } }));
+      toast.success(
+        `${product.name} Added with  ${product.attributes.map(
+          (ele) => ele.name + " " + ele.selected
+        )}`
+      );
+    }
   };
   useEffect(() => {
     if (data) {
@@ -118,7 +147,7 @@ const Product = () => {
                               );
                             }}
                             id={color.id}
-                            className={`uppercase border text-sm w-8 h-8  bg-[${color.value}] cursor-pointer border-2 border-[#eee] hover:border-green active:border-green `}
+                            className={`uppercase border text-sm w-8 h-8  bg-[${color.value}] cursor-pointer border-2 border-[#eee] hover:border-green  `}
                           ></p>
                         ))}
                       </div>
@@ -261,9 +290,16 @@ const Product = () => {
               </p>
             </div>
             <div className="py-6">
-              <button className="uppercase bg-green text-gray font-raleway w-64 py-2 text-center font-semibold">
-                Add To Cart
-              </button>
+              {data.product.inStock ? (
+                <button
+                  onClick={addToCartList}
+                  className="uppercase bg-green text-gray font-raleway w-64 py-2 text-center font-semibold"
+                >
+                  Add To Cart
+                </button>
+              ) : (
+                <Alert message="Out Of Stock" />
+              )}
             </div>
             <div
               className="pt-4"
