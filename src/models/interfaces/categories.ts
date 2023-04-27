@@ -11,12 +11,14 @@ export interface IProducts {
   gallery: string[];
   attributes: IAttribute[];
   prices: { currency: { label: string; symbol: string }; amount: number }[];
+  itemCount: number;
 }
 
 export interface IAttribute {
   id: string;
   name: string;
   type: string;
+  selected: string | boolean;
   items: IItem[];
 }
 
