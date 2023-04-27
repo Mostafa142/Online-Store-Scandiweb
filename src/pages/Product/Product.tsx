@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 import { useState } from "react";
 import { IAttribute, IItem } from "../../models/interfaces/categories";
-// import { isElementType } from "@testing-library/user-event/dist/utils";
+import { isElementType } from "@testing-library/user-event/dist/utils";
 const Product = () => {
   const params = useParams();
   // console.log(params)
@@ -89,29 +89,6 @@ const Product = () => {
                       </div>
                     </div>
                   )}
-
-                  {/* {item.items.map((el: IItem) => {
-                    return (
-                      <div
-                        key={el.id}
-                        className={`cursor-pointer border border-black`}
-                      >
-                        <p
-                          className={`uppercase w-14 text-center py-2  m-0.5 text-sm ${
-                            item.name === "Color"
-                              ? `bg-[${el.value}] py-5`
-                              : "bg-transparent hover:bg-black hover:text-white"
-                          }`}
-                        >
-                          {item.name === "Size"
-                            ? el.value
-                            : item.name === "Color"
-                            ? ""
-                            : el.displayValue}
-                        </p>
-                      </div>
-                    );
-                  })} */}
                 </div>
               );
             })}
