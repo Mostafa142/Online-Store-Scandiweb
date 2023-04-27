@@ -1,9 +1,8 @@
 import { gql } from "@apollo/client";
 
-
-// ALL Query 
+// ALL Query
 export const ALL_CATEGORY = gql`
-query {
+  query {
     category(input: { title: "all" }) {
       products {
         id
@@ -12,31 +11,44 @@ query {
         gallery
         description
         brand
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
       }
     }
   }
-  
 `;
 
-// Tech Query 
+// Tech Query
 export const TECH_PRODUCTS = gql`
-query{
-  category (input:{title:"tech"}){
-   products{
-     id
-     name
-     inStock
-     gallery
-     description
-     brand
-   }
- }
-}
+  query {
+    category(input: { title: "tech" }) {
+      products {
+        id
+        name
+        inStock
+        gallery
+        description
+        brand
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
+      }
+    }
+  }
 `;
 
-// Clothes Query 
+// Clothes Query
 export const CLOTHES_PRODUCTS = gql`
-query {
+  query {
     category(input: { title: "clothes" }) {
       products {
         id
@@ -45,8 +57,45 @@ query {
         gallery
         description
         brand
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
       }
     }
   }
-  
+`;
+
+// Get Certain Product
+export const GET_CERTAIN_PRODUCT = gql`
+  query Product($id: String!) {
+    product(id: $id) {
+      name
+      brand
+      gallery
+      inStock
+      description
+      category
+      attributes {
+        id
+        name
+        type
+        items {
+          value
+          displayValue
+          id
+        }
+      }
+      prices {
+        currency {
+          label
+          symbol
+        }
+        amount
+      }
+    }
+  }
 `;

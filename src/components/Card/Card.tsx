@@ -6,6 +6,7 @@ type Props = {
   data: IProducts[];
 };
 const Card: React.FC<Props> = ({ data }) => {
+  console.log(data);
   return (
     <>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1">
@@ -15,7 +16,10 @@ const Card: React.FC<Props> = ({ data }) => {
               key={item.id}
               className="card p-3 font-raleway flex flex-col my-5 hover:shadow-2xl translate-y-5 transition  duration-300 cursor-pointer"
             >
-              <NavLink to="/Product" className={'flex justify-center items-center'}>
+              <NavLink
+                to={`/Product/${item.id}`}
+                className={"flex justify-center items-center"}
+              >
                 <img
                   src={item.gallery[0]}
                   alt="Product Img"
@@ -24,7 +28,7 @@ const Card: React.FC<Props> = ({ data }) => {
               </NavLink>
 
               <NavLink
-                to="/Product"
+                to={`/Product/${item.id}`}
                 className="cart relative cursor-pointer hidden transition duration-300"
               >
                 <img
@@ -35,8 +39,10 @@ const Card: React.FC<Props> = ({ data }) => {
               </NavLink>
 
               <div className="py-5">
-                <h2 className="font-normal text-lg">Apollo Running Short</h2>
-                <p className="font-semibold text-lg">$50.00</p>
+                <h2 className="font-normal text-lg">{item.name}</h2>
+                <p className="font-semibold text-lg">
+                  {item.prices[0].currency.symbol + " " + item.prices[0].amount}
+                </p>
               </div>
             </div>
           );
