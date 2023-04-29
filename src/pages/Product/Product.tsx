@@ -26,7 +26,7 @@ const Product = () => {
   const [product, setProduct] = useState<IProducts>({
     id: "",
     attributes: [],
-    description: "",
+    description: "",  
     gallery: [],
     inStock: false,
     itemCount: 0,
