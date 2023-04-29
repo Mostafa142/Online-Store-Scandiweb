@@ -1,13 +1,7 @@
-import product1 from "../../assets/images/product8.png";
-import product2 from "../../assets/images/product7.png";
-import plus from "../../assets/images/plus.svg";
-import minus from "../../assets/images/minus.svg";
-import leftArrow from "../../assets/images/leftArrow.svg";
-import rightArrow from "../../assets/images/rightArrow.svg";
+
 import { useDispatch, useSelector } from "react-redux";
 import { IProducts } from "../../models/interfaces/categories";
 import CartItems from "../../components/CartItems/CartItems";
-import ImageGallery from "../../components/ImageGallery/ImageGallery";
 import {
   decrementCartCounter,
   decrementItemCount,

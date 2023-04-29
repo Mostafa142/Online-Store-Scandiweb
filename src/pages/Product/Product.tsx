@@ -4,7 +4,6 @@ import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 import { useState, useEffect } from "react";
 import {
   IAttribute,
-  IItem,
   IProducts,
 } from "../../models/interfaces/categories";
 import { toast } from "react-toastify";
