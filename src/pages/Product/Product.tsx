@@ -26,7 +26,8 @@ const Product = () => {
   const [product, setProduct] = useState<IProducts>({
     id: "",
     attributes: [],
-    description: "",  
+    description: "",
+    brand: "",
     gallery: [],
     inStock: false,
     itemCount: 0,
@@ -97,7 +98,7 @@ const Product = () => {
       <div className="grid lg:grid-cols-3 py-5">
         <div className="lg:col-span-2 flex ">
           <div className="flex flex-col gap-5 py-5 pr-5">
-            {data.product.gallery.map((item: any, idx: any) => {
+            {product.gallery.map((item: any, idx: any) => {
               return (
                 <img
                   key={idx}
@@ -112,7 +113,7 @@ const Product = () => {
 
           <div className="py-5 w-5/6 ">
             <img
-              src={selectedProduct ? selectedProduct : data.product.gallery[0]}
+              src={selectedProduct ? selectedProduct : product.gallery[0]}
               alt="product1"
               className="h-5/6 w-full"
             />
@@ -122,14 +123,14 @@ const Product = () => {
         <div className="py-5 ">
           <div>
             <h2 className="font-bold text-2xl text-lightBlack ">
-              {data.product.name}
+              {product.name}
             </h2>
-            <p className="text-3xl text-lightBlack">{data.product.brand}</p>
+            <p className="text-3xl text-lightBlack">{product.brand}</p>
           </div>
           <div className="py-10 font-Roboto">
             {/* ATTRIBUTES  */}
 
-            {data.product.attributes.map((attr: IAttribute) => {
+            {product.attributes.map((attr: IAttribute) => {
               return (
                 <div
                   className="uppercase font-bold pb-2 text-lightBlack"
@@ -145,15 +146,13 @@ const Product = () => {
                             key={color.id}
                             onClick={() => {
                               updateAttributes(color.id, attr.id);
-                              toast.info(
-                                `${attr.name + " " + color.id} Selected`,
-                                {
-                                  autoClose: false,
-                                }
-                              );
                             }}
                             id={color.id}
-                            className={`uppercase border text-sm w-8 h-8  bg-[${color.value}] cursor-pointer border-2 border-[#eee] hover:border-green  `}
+                            className={`uppercase border text-sm w-8 h-8  bg-[${
+                              color.value
+                            }] cursor-pointer border-2 border-[#eee]   ${
+                              color.id === attr.selected ? "border-green" : ""
+                            }`}
                           ></p>
                         ))}
                       </div>
@@ -169,14 +168,12 @@ const Product = () => {
                             <p
                               onClick={() => {
                                 updateAttributes(Capacity.id, attr.id);
-                                toast.info(
-                                  `${attr.name + " " + Capacity.id} Selected`,
-                                  {
-                                    autoClose: false,
-                                  }
-                                );
                               }}
-                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer ${
+                                Capacity.id === attr.selected
+                                  ? "bg-black text-white"
+                                  : ""
+                              }`}
                             >
                               {Capacity.value}
                             </p>
@@ -194,14 +191,12 @@ const Product = () => {
                             <p
                               onClick={() => {
                                 updateAttributes(withPorts.id, attr.id);
-                                toast.info(
-                                  `${attr.name + " " + withPorts.id} Selected`,
-                                  {
-                                    autoClose: false,
-                                  }
-                                );
                               }}
-                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer ${
+                                withPorts.id === attr.selected
+                                  ? "bg-black text-white"
+                                  : ""
+                              } `}
                             >
                               {withPorts.value}
                             </p>
@@ -219,16 +214,12 @@ const Product = () => {
                             <p
                               onClick={() => {
                                 updateAttributes(touchKeyBoard.id, attr.id);
-                                toast.info(
-                                  `${
-                                    attr.name + " " + touchKeyBoard.id
-                                  } Selected`,
-                                  {
-                                    autoClose: false,
-                                  }
-                                );
                               }}
-                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer ${
+                                touchKeyBoard.id === attr.selected
+                                  ? "bg-black text-white"
+                                  : ""
+                              } `}
                             >
                               {touchKeyBoard.value}
                             </p>
@@ -246,14 +237,12 @@ const Product = () => {
                             <p
                               onClick={() => {
                                 updateAttributes(size.id, attr.id);
-                                toast.info(
-                                  `${attr.name + " " + size.id} Selected`,
-                                  {
-                                    autoClose: false,
-                                  }
-                                );
                               }}
-                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer ${
+                                size.id === attr.selected
+                                  ? "bg-black text-white"
+                                  : ""
+                              }`}
                             >
                               {size.value}
                             </p>

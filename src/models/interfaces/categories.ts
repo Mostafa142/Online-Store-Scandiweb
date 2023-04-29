@@ -8,6 +8,7 @@ export interface IProducts {
   name: string;
   inStock: boolean;
   description: string;
+  brand: string;
   gallery: string[];
   attributes: IAttribute[];
   prices: { currency: { label: string; symbol: string }; amount: number }[];
@@ -18,7 +19,7 @@ export interface IAttribute {
   id: string;
   name: string;
   type: string;
-  selected: string | boolean;
+  selected: string;
   items: IItem[];
 }
 

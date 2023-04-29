@@ -9,10 +9,10 @@ interface AddToCartPayload {
   cartItem: IProducts;
 }
 interface IncrementItemCountPayload {
-  cartProd: IProducts;
+  cartItem: IProducts;
 }
 interface DecrementItemCountPayload {
-  cartProd: IProducts;
+  cartItem: IProducts;
 }
 const initialState: CartState = {
   cartList: [],
@@ -29,7 +29,7 @@ const cartSlice = createSlice({
     decrementCartCounter: (state) => {
       state.cartCounter -= 1;
     },
-  
+
     addToCart: (state, action: PayloadAction<AddToCartPayload>) => {
       state.cartList.push(action.payload.cartItem);
     },
@@ -37,7 +37,7 @@ const cartSlice = createSlice({
       state,
       action: PayloadAction<IncrementItemCountPayload>
     ) => {
-      const { id, attributes } = action.payload.cartProd;
+      const { id, attributes } = action.payload.cartItem;
       const cartItemCount = state.cartList.find(
         (item) =>
           item.id === id &&
@@ -53,7 +53,7 @@ const cartSlice = createSlice({
       state,
       action: PayloadAction<DecrementItemCountPayload>
     ) => {
-      const { id, attributes } = action.payload.cartProd;
+      const { id, attributes } = action.payload.cartItem;
       const cartItemCount = state.cartList.find(
         (item) =>
           item.id === id &&
@@ -65,6 +65,17 @@ const cartSlice = createSlice({
         cartItemCount.itemCount -= 1;
       }
     },
+    deleteFromCart: (state, action: PayloadAction<string>) => {
+      state.cartList = state.cartList.filter(
+        (item) => item.id !== action.payload
+      );
+    },
+    incrementCounterFromCart: (
+      state,
+      action: PayloadAction<{ itemCounter: number }>
+    ) => {
+      state.cartCounter -= action.payload.itemCounter;
+    },
   },
 });
 export const {
@@ -73,5 +84,7 @@ export const {
   decrementItemCount,
   decrementCartCounter,
   incrementCartCounter,
+  deleteFromCart,
+  incrementCounterFromCart,
 } = cartSlice.actions;
 export const CartReducer = cartSlice.reducer;
