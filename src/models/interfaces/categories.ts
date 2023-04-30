@@ -28,3 +28,8 @@ export interface IItem {
   displayValue: string;
   value: string;
 }
+
+export interface ICURRENCIES {
+  label: string;
+  symbol: string
+}

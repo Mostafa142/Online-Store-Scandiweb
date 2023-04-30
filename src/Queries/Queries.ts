@@ -99,3 +99,16 @@ export const GET_CERTAIN_PRODUCT = gql`
     }
   }
 `;
+
+
+// Get Certain Product
+export const GET_PRICES = gql`
+query{
+  currencies {
+    label
+    symbol
+  }
+}
+`;
+
+

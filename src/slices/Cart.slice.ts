@@ -8,6 +8,10 @@ interface CartState {
 interface AddToCartPayload {
   cartItem: IProducts;
 }
+
+interface DeleteFromCartPayload {
+  cartItem: IProducts;
+}
 interface IncrementItemCountPayload {
   cartItem: IProducts;
 }
@@ -65,10 +69,27 @@ const cartSlice = createSlice({
         cartItemCount.itemCount -= 1;
       }
     },
-    deleteFromCart: (state, action: PayloadAction<string>) => {
-      state.cartList = state.cartList.filter(
-        (item) => item.id !== action.payload
+    deleteFromCart: (state, action: PayloadAction<DeleteFromCartPayload>) => {
+      const { id, attributes } = action.payload.cartItem;
+      // console.log(action.payload)
+
+      const filteredProducts = state.cartList.filter(
+        (item) =>
+          item.id === id &&
+          item.attributes.every((selec, i) => {
+            return selec.selected === attributes[i].selected;
+          })
       );
+
+      if (filteredProducts.length === 1) {
+        state.cartList = state.cartList.filter(
+          (item) =>
+            !(item.id === id && item.attributes.every((selec, i) => {
+              return selec.selected === attributes[i].selected;
+            }))
+        );
+        state.cartCounter -= filteredProducts[0].itemCount
+      }
     },
     incrementCounterFromCart: (
       state,

@@ -2,10 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 import { useState, useEffect } from "react";
-import {
-  IAttribute,
-  IProducts,
-} from "../../models/interfaces/categories";
+import { IAttribute, IProducts } from "../../models/interfaces/categories";
 import { toast } from "react-toastify";
 import { ATTRIBUTES } from "../../models/enums/attributes";
 import { useDispatch, useSelector } from "react-redux";
@@ -110,7 +107,7 @@ const Product = () => {
             })}
           </div>
 
-          <div className="py-5 w-5/6 ">
+          <div className="py-5 w-5/6">
             <img
               src={selectedProduct ? selectedProduct : product.gallery[0]}
               alt="product1"
@@ -252,29 +249,6 @@ const Product = () => {
                   ) : (
                     ""
                   )}
-
-                  {/* {item.items.map((el: IItem) => {
-                    return (
-                      <div
-                        key={el.id}
-                        className={`cursor-pointer border border-black`}
-                      >
-                        <p
-                          className={`uppercase w-14 text-center py-2  m-0.5 text-sm ${
-                            item.name === "Color"
-                              ? `bg-[${el.value}] py-5`
-                              : "bg-transparent hover:bg-black hover:text-white"
-                          }`}
-                        >
-                          {item.name === "Size"
-                            ? el.value
-                            : item.name === "Color"
-                            ? ""
-                            : el.displayValue}
-                        </p>
-                      </div>
-                    );
-                  })} */}
                 </div>
               );
             })}

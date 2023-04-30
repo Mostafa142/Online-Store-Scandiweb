@@ -8,7 +8,7 @@ const ProductAttributes: React.FC<Props> = ({ attributes }) => {
   return (
     <div>
       {attributes.map((attr, index) => (
-        <>
+        <div key={attr.id}>
           {attr.id === ATTRIBUTES.Size ? (
             <div>
               <p className="uppercase font-bold pb-2 text-lightBlack font-Roboto text-sm">
@@ -122,7 +122,7 @@ const ProductAttributes: React.FC<Props> = ({ attributes }) => {
               </div>
             </div>
           ) : null}
-        </>
+        </div>
       ))}
     </div>
   );

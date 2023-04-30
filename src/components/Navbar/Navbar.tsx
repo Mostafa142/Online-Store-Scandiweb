@@ -5,15 +5,17 @@ import menu from "../.././assets/images/menu.svg";
 import close from "../.././assets/images/close.svg";
 
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import NavCart from "../NavCart/NavCart";
 import { useSelector } from "react-redux";
-import { IProducts } from "../../models/interfaces/categories";
+import { ICURRENCIES, IProducts } from "../../models/interfaces/categories";
+import { useQuery } from "@apollo/client";
+import { GET_PRICES } from "../../Queries/Queries";
 
 const Navbar = () => {
-  const [showMenu, setShowMenu] = useState(false);
-  const [showCurrency, setShowCurrency] = useState(false);
-  const [showCart, setShowCart] = useState(false);
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [showCurrency, setShowCurrency] = useState<boolean>(false);
+  const [showCart, setShowCart] = useState<boolean>(false);
   const { cartCounter } = useSelector(
     (state: { cart: { cartList: IProducts[]; cartCounter: number } }) =>
       state.cart
@@ -32,6 +34,23 @@ const Navbar = () => {
       name: "JPY",
     },
   ];
+
+  // Currency
+  const { data } = useQuery(GET_PRICES);
+  console.log("--------------------------");
+  console.log(data);
+
+  // Cart Vidiblity
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const handleDropDownFocus = (state: boolean) => {
+    setShowCart(!state);
+  };
+  const handleClickOutsideDropdown = (e: any) => {
+    if (showCart && !dropdownRef.current?.contains(e.target as Node)) {
+      setShowCart(false);
+    }
+  };
+  window.addEventListener("click", handleClickOutsideDropdown);
 
   return (
     <>
@@ -63,15 +82,16 @@ const Navbar = () => {
 
           {showCurrency ? (
             <div className={`shadow-lg py-2 absolute top-14 `}>
-              {currency.map((item) => {
+              {data.currencies.map((item: ICURRENCIES) => {
                 return (
                   <div
-                    key={item.name}
+                    key={item.symbol}
                     className="flex font-semibold py-2 px-7 hover:bg-gray cursor-pointer"
                   >
-                    <p
+                    {item.label}
+                    {/* <p
                       onClick={() => setShowCurrency(!showCurrency)}
-                    >{`${item.icon} ${item.name}`}</p>
+                    >{`$ ${}`}</p> */}
                   </div>
                 );
               })}
@@ -80,13 +100,14 @@ const Navbar = () => {
             ""
           )}
 
-          <div className="relative">
-            <img
-              src={cart}
-              alt="CART"
-              className="cursor-pointer"
-              onClick={() => setShowCart(!showCart)}
-            />
+          <div className="relative cursor-pointer">
+            <div ref={dropdownRef}>
+              <img
+                src={cart}
+                alt="CART"
+                onClick={(e) => handleDropDownFocus(showCart)}
+              />
+            </div>
             <div className="absolute w-5 -top-3 -right-3 rounded-full bg-green text-center text-sm">
               {cartCounter}
             </div>

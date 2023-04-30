@@ -32,7 +32,7 @@ const NavCart = () => {
   });
 
   return (
-    <div className="absolute font-raleway right-10 h-[80vh] overflow-auto top-16 px-5 py-5 z-10 bg-white shadow-lg border border-green rounded-3xl ">
+    <div className="absolute font-raleway right-10 h-[80vh] overflow-scroll top-16 px-5 py-5 z-20 bg-white shadow-lg border border-green rounded-3xl ">
       <h2 className=" font-bold text-base  mb-8">
         My Bag ,{" "}
         <span className="normal-case  font-semibold">{cartCounter}</span>
