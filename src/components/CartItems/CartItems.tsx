@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { IProducts } from "../../models/interfaces/categories";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import { useDispatch } from "react-redux";
 import { deleteFromCart } from "../../slices/Cart.slice";
+import DeleteConfirmation from "../DeleteConfimation/DeleteConfirmation";
 
 interface Props {
   cartList: IProducts[];
@@ -15,10 +16,39 @@ const CartItems: React.FC<Props> = ({
   IncrementItemInCart,
   DecrementCartInCart,
 }) => {
+  const [confirmDelete, setConfirmDelete] = useState({
+    message: "",
+    isLoading: false,
+  });
   const dispatch = useDispatch();
+  const [deletedProduct, setDeletedProduct] = useState<IProducts>({
+    id: "",
+    attributes: [],
+    description: "",
+    brand: "",
+    gallery: [],
+    inStock: false,
+    itemCount: 0,
+    name: "",
+    prices: [],
+  });
   const deletItem = (item: IProducts) => {
-    dispatch(deleteFromCart({ cartItem: item }));
+    setConfirmDelete({
+      message: `Are you sure you want to delete ${item.name}?`,
+      isLoading: true,
+    });
+    setDeletedProduct(item);
   };
+
+  const confirmedDelete = () => {
+    dispatch(deleteFromCart({ cartItem: deletedProduct }));
+    CloseConfirmationComponent();
+  };
+
+  const CloseConfirmationComponent = () => {
+    setConfirmDelete({ message: "close", isLoading: false });
+  };
+  console.log(confirmDelete);
   return (
     <div>
       {cartList.length > 0 ? (
@@ -79,6 +109,7 @@ const CartItems: React.FC<Props> = ({
                     <ImageGallery gallery={item.gallery} />
                   </div>
                 </div>
+
                 <div className="w-full border border-gray"></div>
               </div>
             );
@@ -86,6 +117,13 @@ const CartItems: React.FC<Props> = ({
         </>
       ) : (
         <p className="text-center p-12">There were no selected items...</p>
+      )}
+      {confirmDelete.isLoading && (
+        <DeleteConfirmation
+          message={confirmDelete.message}
+          confirmedDelete={confirmedDelete}
+          CloseConfirmationComponent={CloseConfirmationComponent}
+        />
       )}
     </div>
   );
