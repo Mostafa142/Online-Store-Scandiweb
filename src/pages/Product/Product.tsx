@@ -2,7 +2,11 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 import { useState, useEffect } from "react";
-import { IAttribute, IProducts } from "../../models/interfaces/categories";
+import {
+  IAttribute,
+  ICURRENCIES,
+  IProducts,
+} from "../../models/interfaces/categories";
 import { toast } from "react-toastify";
 import { ATTRIBUTES } from "../../models/enums/attributes";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,13 +15,17 @@ import Alert from "../../components/Alert/Alert";
 
 const Product = () => {
   const dispatch = useDispatch();
-  const { cartList, cartCounter } = useSelector(
+  const { cartList } = useSelector(
     (state: { cart: { cartList: IProducts[]; cartCounter: number } }) =>
       state.cart
   );
-  console.log("====================================");
-  console.log(cartList, cartCounter);
-  console.log("====================================");
+  const { currentCurrency } = useSelector(
+    (state: {
+      cart: { cartList: IProducts[]; cartCounter: number };
+      products: { products: IProducts[]; currentCurrency: ICURRENCIES };
+    }) => state.products
+  );
+
   const [selectedProduct, setSelectedProduct] = useState("");
   const [product, setProduct] = useState<IProducts>({
     id: "",
@@ -257,7 +265,12 @@ const Product = () => {
             <div>
               <p className="uppercase font-bold pb-2 text-lightBlack">price:</p>
               <p className="uppercase  font-bold text-xl font-raleway">
-                {`${data.product.prices[0].currency.symbol} ${data.product.prices[0].amount}`}
+                {(data.product as IProducts).prices.map(
+                  ({ currency, amount }) =>
+                    currency.label === currentCurrency.label ? (
+                      <>{currency.symbol + " " + amount}</>
+                    ) : null
+                )}
               </p>
             </div>
             <div className="py-6">

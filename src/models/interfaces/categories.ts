@@ -11,7 +11,7 @@ export interface IProducts {
   brand: string;
   gallery: string[];
   attributes: IAttribute[];
-  prices: { currency: { label: string; symbol: string }; amount: number }[];
+  prices: IPrice[];
   itemCount: number;
 }
 
@@ -31,5 +31,10 @@ export interface IItem {
 
 export interface ICURRENCIES {
   label: string;
-  symbol: string
+  symbol: string;
+}
+
+export interface IPrice {
+  currency: { label: string; symbol: string };
+  amount: number;
 }

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { IProducts } from "../../models/interfaces/categories";
+import { ICURRENCIES, IProducts } from "../../models/interfaces/categories";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import ImageGallery from "../ImageGallery/ImageGallery";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 import { deleteFromCart } from "../../slices/Cart.slice";
 import DeleteConfirmation from "../DeleteConfimation/DeleteConfirmation";
 
@@ -20,6 +21,13 @@ const CartItems: React.FC<Props> = ({
     message: "",
     isLoading: false,
   });
+
+  const { currentCurrency } = useSelector(
+    (state: {
+      cart: { cartList: IProducts[]; cartCounter: number };
+      products: { products: IProducts[]; currentCurrency: ICURRENCIES };
+    }) => state.products
+  );
   const dispatch = useDispatch();
   const [deletedProduct, setDeletedProduct] = useState<IProducts>({
     id: "",
@@ -84,8 +92,11 @@ const CartItems: React.FC<Props> = ({
                     </div>
                     {/* Price */}
                     <p className="font-bold text-lg my-2">
-                      {item.prices[0].currency.symbol}
-                      {(item.prices[0].amount * item.itemCount).toFixed(2)}
+                      {(item as IProducts).prices.map(({ currency, amount }) =>
+                        currency.label === currentCurrency.label ? (
+                          <>{currency.symbol + " " + amount}</>
+                        ) : null
+                      )}
                     </p>
                     {/* ATTRIBUTES  */}
                     <ProductAttributes attributes={item.attributes} />
