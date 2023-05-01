@@ -1,18 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import greenCart from "../../assets/images/greenCart.svg";
-import { ICURRENCIES, IProducts } from "../../models/interfaces/categories";
+import { IProducts } from "../../models/interfaces/categories";
 import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 type Props = {
   data: IProducts[];
 };
 const Card: React.FC<Props> = ({ data }) => {
-  const { currentCurrency } = useSelector(
-    (state: {
-      cart: { cartList: IProducts[]; cartCounter: number };
-      products: { products: IProducts[]; currentCurrency: ICURRENCIES };
-    }) => state.products
-  );
+  const { currentCurrency } = useSelector((state: RootState) => state.products);
 
   return (
     <>

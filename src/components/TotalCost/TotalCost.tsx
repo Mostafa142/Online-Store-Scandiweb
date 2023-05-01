@@ -1,22 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import {
-  ICURRENCIES,
-  IPrice,
-  IProducts,
-} from "../../models/interfaces/categories";
+import { IPrice, IProducts } from "../../models/interfaces/categories";
+import { RootState } from "../../store";
 
 const TotalCost = () => {
   const { cartList } = useSelector(
     (state: { cart: { cartList: IProducts[]; cartCounter: number } }) =>
       state.cart
   );
-  const { currentCurrency } = useSelector(
-    (state: {
-      cart: { cartList: IProducts[]; cartCounter: number };
-      products: { products: IProducts[]; currentCurrency: ICURRENCIES };
-    }) => state.products
-  );
+  const { currentCurrency } = useSelector((state: RootState) => state.products);
   const exchangePrice = (prices: IPrice[]) => {
     const selectedPrice = prices.find(
       (value) => value.currency.label === currentCurrency.label

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ICURRENCIES, IProducts } from "../../models/interfaces/categories";
+import {  IProducts } from "../../models/interfaces/categories";
 import CartItems from "../../components/CartItems/CartItems";
 import {
   decrementCartCounter,
@@ -8,6 +8,7 @@ import {
   incrementCartCounter,
   incrementItemCount,
 } from "../../slices/Cart.slice";
+import { RootState } from "../../store";
 
 const NavCart = () => {
   const dispatch = useDispatch();
@@ -15,12 +16,7 @@ const NavCart = () => {
     (state: { cart: { cartList: IProducts[]; cartCounter: number } }) =>
       state.cart
   );
-  const { currentCurrency } = useSelector(
-    (state: {
-      cart: { cartList: IProducts[]; cartCounter: number };
-      products: { products: IProducts[]; currentCurrency: ICURRENCIES };
-    }) => state.products
-  );
+  const { currentCurrency } = useSelector((state: RootState) => state.products);
   const IncrementItemInCart = (cartItem: IProducts) => {
     dispatch(incrementItemCount({ cartItem }));
     dispatch(incrementCartCounter());

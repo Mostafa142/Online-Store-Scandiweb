@@ -1,21 +1,17 @@
 import React, { useState } from "react";
-import { ICURRENCIES, IProducts } from "../../models/interfaces/categories";
+import { ICURRENCIES } from "../../models/interfaces/categories";
 import downArrow from "../../assets/images/downArrow.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { CURRENCY } from "../../models/enums/currency";
 import { changeCurrency } from "../../slices/Products.slice";
+import { RootState } from "../../store";
 type Props = {
   currencies: ICURRENCIES[];
 };
 const CurrencyList: React.FC<Props> = ({ currencies }) => {
   const [showCurrency, setShowCurrency] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const { currentCurrency } = useSelector(
-    (state: {
-      cart: { cartList: IProducts[]; cartCounter: number };
-      products: { products: IProducts[]; currentCurrency: ICURRENCIES };
-    }) => state.products
-  );
+  const { currentCurrency } = useSelector((state: RootState) => state.products);
 
   const selectCurrency = (currency: (typeof CURRENCY)[number]) => {
     dispatch(changeCurrency(currency));

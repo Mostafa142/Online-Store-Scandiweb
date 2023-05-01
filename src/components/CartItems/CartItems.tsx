@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { ICURRENCIES, IProducts } from "../../models/interfaces/categories";
+import { IProducts } from "../../models/interfaces/categories";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import { useDispatch, useSelector } from "react-redux";
 
 import { deleteFromCart } from "../../slices/Cart.slice";
 import DeleteConfirmation from "../DeleteConfimation/DeleteConfirmation";
+import { RootState } from "../../store";
 
 interface Props {
   cartList: IProducts[];
@@ -22,12 +23,7 @@ const CartItems: React.FC<Props> = ({
     isLoading: false,
   });
 
-  const { currentCurrency } = useSelector(
-    (state: {
-      cart: { cartList: IProducts[]; cartCounter: number };
-      products: { products: IProducts[]; currentCurrency: ICURRENCIES };
-    }) => state.products
-  );
+  const { currentCurrency } = useSelector((state: RootState) => state.products);
   const dispatch = useDispatch();
   const [deletedProduct, setDeletedProduct] = useState<IProducts>({
     id: "",

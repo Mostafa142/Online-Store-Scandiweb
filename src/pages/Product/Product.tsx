@@ -4,7 +4,6 @@ import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 import { useState, useEffect } from "react";
 import {
   IAttribute,
-  ICURRENCIES,
   IProducts,
 } from "../../models/interfaces/categories";
 import { toast } from "react-toastify";
@@ -12,6 +11,7 @@ import { ATTRIBUTES } from "../../models/enums/attributes";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, incrementCartCounter } from "../../slices/Cart.slice";
 import Alert from "../../components/Alert/Alert";
+import { RootState } from "../../store";
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -19,12 +19,7 @@ const Product = () => {
     (state: { cart: { cartList: IProducts[]; cartCounter: number } }) =>
       state.cart
   );
-  const { currentCurrency } = useSelector(
-    (state: {
-      cart: { cartList: IProducts[]; cartCounter: number };
-      products: { products: IProducts[]; currentCurrency: ICURRENCIES };
-    }) => state.products
-  );
+  const { currentCurrency } = useSelector((state: RootState) => state.products);
 
   const [selectedProduct, setSelectedProduct] = useState("");
   const [product, setProduct] = useState<IProducts>({
