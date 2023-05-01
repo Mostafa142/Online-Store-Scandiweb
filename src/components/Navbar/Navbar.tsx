@@ -1,6 +1,5 @@
 import logo from "../.././assets/images/icon.svg";
 import cart from "../.././assets/images/cart.svg";
-import downArrow from "../.././assets/images/downArrow.svg";
 import menu from "../.././assets/images/menu.svg";
 import close from "../.././assets/images/close.svg";
 
@@ -8,32 +7,18 @@ import { NavLink } from "react-router-dom";
 import { useState, useRef } from "react";
 import NavCart from "../NavCart/NavCart";
 import { useSelector } from "react-redux";
-import { ICURRENCIES, IProducts } from "../../models/interfaces/categories";
+import { IProducts } from "../../models/interfaces/categories";
 import { useQuery } from "@apollo/client";
 import { GET_PRICES } from "../../Queries/Queries";
+import CurrencyList from "../CurrencyList/CurrencyList";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
-  const [showCurrency, setShowCurrency] = useState<boolean>(false);
   const [showCart, setShowCart] = useState<boolean>(false);
   const { cartCounter } = useSelector(
     (state: { cart: { cartList: IProducts[]; cartCounter: number } }) =>
       state.cart
   );
-  const currency = [
-    {
-      icon: "$",
-      name: "USD",
-    },
-    {
-      icon: "€",
-      name: "EUR",
-    },
-    {
-      icon: "¥",
-      name: "JPY",
-    },
-  ];
 
   // Currency
   const { data } = useQuery(GET_PRICES);
@@ -68,38 +53,8 @@ const Navbar = () => {
         </div>
 
         <img src={logo} alt="LOGO" />
-
         <div className="md:flex gap-10 hidden">
-          <div className="flex gap-2 items-center ">
-            <p>$</p>
-            <img
-              src={downArrow}
-              alt="CURRENCY"
-              className={`cursor-pointer `}
-              onClick={() => setShowCurrency(!showCurrency)}
-            />
-          </div>
-
-          {showCurrency ? (
-            <div className={`shadow-lg py-2 absolute top-14 `}>
-              {data.currencies.map((item: ICURRENCIES) => {
-                return (
-                  <div
-                    key={item.symbol}
-                    className="flex font-semibold py-2 px-7 hover:bg-gray cursor-pointer"
-                  >
-                    {item.label}
-                    {/* <p
-                      onClick={() => setShowCurrency(!showCurrency)}
-                    >{`$ ${}`}</p> */}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            ""
-          )}
-
+          <CurrencyList currencies={data?.currencies} />
           <div className="relative cursor-pointer">
             <div ref={dropdownRef}>
               <img
@@ -140,7 +95,7 @@ const Navbar = () => {
             </NavLink>
           </div>
           <div className="flex gap-10">
-            <div className="flex gap-2 items-center ">
+            {/* <div className="flex gap-2 items-center ">
               <p>$</p>
               <img
                 src={downArrow}
@@ -166,7 +121,7 @@ const Navbar = () => {
               </div>
             ) : (
               ""
-            )}
+            )} */}
 
             <div className="relative">
               <img

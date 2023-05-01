@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { IProducts } from "../../models/interfaces/categories";
+import { ICURRENCIES, IProducts } from "../../models/interfaces/categories";
 import CartItems from "../../components/CartItems/CartItems";
 import {
   decrementCartCounter,
@@ -14,6 +14,12 @@ const NavCart = () => {
   const { cartList, cartCounter } = useSelector(
     (state: { cart: { cartList: IProducts[]; cartCounter: number } }) =>
       state.cart
+  );
+  const { currentCurrency } = useSelector(
+    (state: {
+      cart: { cartList: IProducts[]; cartCounter: number };
+      products: { products: IProducts[]; currentCurrency: ICURRENCIES };
+    }) => state.products
   );
   const IncrementItemInCart = (cartItem: IProducts) => {
     dispatch(incrementItemCount({ cartItem }));
@@ -45,7 +51,9 @@ const NavCart = () => {
       <div className="flex flex-col gap-5">
         <div className="flex justify-between mt-2 font-Roboto font-semibold text-base">
           <p>Total</p>
-          <p className="font-raleway font-bold">{`${TotalPrice.toFixed(2)}`}</p>
+          <p className="font-raleway font-bold">
+            {currentCurrency.symbol + TotalPrice.toFixed(2)}
+          </p>
         </div>
 
         <div className="grid grid-cols-2 font-raleway font-semibold text-sm gap-5">

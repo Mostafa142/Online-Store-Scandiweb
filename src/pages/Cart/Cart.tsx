@@ -1,4 +1,3 @@
-
 import { useDispatch, useSelector } from "react-redux";
 import { IProducts } from "../../models/interfaces/categories";
 import CartItems from "../../components/CartItems/CartItems";
@@ -8,6 +7,7 @@ import {
   incrementCartCounter,
   incrementItemCount,
 } from "../../slices/Cart.slice";
+import TotalCost from "../../components/TotalCost/TotalCost";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const Cart = () => {
             </div>
             <div className="flex gap-5">
               <span className="text-xl  font-semibold w-20">Total: </span>
-              <span className="font-extrabold text-xl">$200.00</span>
+              <TotalCost />
             </div>
             <div>
               <button className="uppercase text-center py-2 w-52 bg-green text-white text-xs font-semibold">
