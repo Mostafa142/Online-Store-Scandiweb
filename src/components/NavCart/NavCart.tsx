@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {  IProducts } from "../../models/interfaces/categories";
+import { IProducts } from "../../models/interfaces/categories";
 import CartItems from "../../components/CartItems/CartItems";
 import {
   decrementCartCounter,
@@ -9,8 +9,10 @@ import {
   incrementItemCount,
 } from "../../slices/Cart.slice";
 import { RootState } from "../../store";
-
-const NavCart = () => {
+interface Props {
+  type: String;
+}
+const NavCart: React.FC<Props> = ({ type }) => {
   const dispatch = useDispatch();
   const { cartList, cartCounter } = useSelector(
     (state: { cart: { cartList: IProducts[]; cartCounter: number } }) =>
@@ -34,7 +36,17 @@ const NavCart = () => {
   });
 
   return (
-    <div className="absolute font-raleway right-10 h-[80vh] overflow-scroll top-16 px-5 py-5 z-20 bg-white shadow-lg border border-green rounded-3xl ">
+    <div
+      className={`absolute font-raleway right-10 overflow-x-hidden ${
+        cartCounter === 0
+          ? "h-auto"
+          : cartCounter === 1
+          ? "h-auto"
+          : "h-[85vh]  overflow-scroll"
+      }  ${
+        type === "SmallScreen" ? "top-44 w-5/6" : "top-16"
+      } px-5 py-5 z-20 bg-white shadow-lg border border-r-0 border-green rounded-3xl `}
+    >
       <h2 className=" font-bold text-base  mb-8">
         My Bag ,{" "}
         <span className="normal-case  font-semibold">{cartCounter}</span>
@@ -43,6 +55,7 @@ const NavCart = () => {
         cartList={cartList}
         IncrementItemInCart={IncrementItemInCart}
         DecrementCartInCart={DecrementCartInCart}
+        type="NavbarCart"
       />
       <div className="flex flex-col gap-5">
         <div className="flex justify-between mt-2 font-Roboto font-semibold text-base">

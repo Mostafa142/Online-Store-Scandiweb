@@ -5,8 +5,9 @@ import rightArrow from "../../assets/images/rightArrow.svg";
 
 interface Props {
   gallery: string[];
+  type:string
 }
-const ImageGallery: React.FC<Props> = ({ gallery }) => {
+const ImageGallery: React.FC<Props> = ({ gallery,type }) => {
   const [currentImage, setCurrentImage] = useState<number>(0);
   const showImg = gallery[currentImage];
 
@@ -27,7 +28,7 @@ const ImageGallery: React.FC<Props> = ({ gallery }) => {
   };
   return (
     <div className="relative">
-      <img src={showImg} alt={showImg} className="h-64 w-[200px]" />
+      <img src={showImg} alt={showImg} className={` ${type==="NavbarCart"?"h-40 w-[150px]":"h-64 w-[200px]"}`} />
 
       <div className="flex gap-3 absolute bottom-4 right-4">
         <img

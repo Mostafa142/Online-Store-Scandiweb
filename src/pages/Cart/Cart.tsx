@@ -35,6 +35,7 @@ const Cart = () => {
           cartList={cartList}
           IncrementItemInCart={IncrementItemInCart}
           DecrementCartInCart={DecrementCartInCart}
+          type="BigCart"
         />
         {cartList.length > 0 ? (
           <div className="my-10 flex flex-col gap-2">

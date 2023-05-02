@@ -3,8 +3,9 @@ import { IAttribute } from "../../models/interfaces/categories";
 import { ATTRIBUTES } from "../../models/enums/attributes";
 interface Props {
   attributes: IAttribute[];
+  type: String;
 }
-const ProductAttributes: React.FC<Props> = ({ attributes }) => {
+const ProductAttributes: React.FC<Props> = ({ attributes, type }) => {
   return (
     <div>
       {attributes.map((attr, index) => (
@@ -19,7 +20,9 @@ const ProductAttributes: React.FC<Props> = ({ attributes }) => {
                   return (
                     <p
                       key={index}
-                      className={`uppercase w-14 text-center py-2 border text-sm cursor-pointer  
+                      className={`uppercase ${
+                        type === "NavbarCart" ? "w-8 py-1" : " w-14  py-2"
+                      } text-center border text-sm cursor-pointer  
                        ${
                          size.id === attr?.selected
                            ? "bg-black text-white "
@@ -47,7 +50,9 @@ const ProductAttributes: React.FC<Props> = ({ attributes }) => {
                       }`}
                     >
                       <p
-                        className={`uppercase text-sm w-8 h-8   bg-${color} `}
+                        className={`uppercase text-sm ${
+                          type === "NavbarCart" ? "w-6 h-6" : "w-8  h-8"
+                        }    bg-${color} `}
                       ></p>
                     </div>
                   );
@@ -64,7 +69,11 @@ const ProductAttributes: React.FC<Props> = ({ attributes }) => {
                   return (
                     <p
                       key={index}
-                      className={`uppercase w-14 text-center py-2 border text-sm cursor-pointer  
+                      className={`uppercase ${
+                        type === "NavbarCart"
+                          ? "w-10 text-xs py-1"
+                          : "w-14 text-sm py-2"
+                      }  text-center py-2 border cursor-pointer  
                      ${
                        capacity.id === attr?.selected
                          ? "bg-black text-white "
@@ -87,7 +96,11 @@ const ProductAttributes: React.FC<Props> = ({ attributes }) => {
                   return (
                     <p
                       key={index}
-                      className={`uppercase w-14 text-center py-2 border text-sm cursor-pointer  
+                      className={`uppercase ${
+                        type === "NavbarCart"
+                          ? "w-10 text-xs py-1"
+                          : "w-14 text-sm py-2"
+                      } text-center  border cursor-pointer  
                    ${
                      ports.id === attr?.selected ? "bg-black text-white " : ""
                    } `}
@@ -108,7 +121,11 @@ const ProductAttributes: React.FC<Props> = ({ attributes }) => {
                   return (
                     <p
                       key={index}
-                      className={`uppercase w-14 text-center py-2 border text-sm cursor-pointer  
+                      className={`uppercase ${
+                        type === "NavbarCart"
+                          ? "w-10 text-xs py-1"
+                          : "w-14 text-sm py-2"
+                      } text-center border cursor-pointer  
                    ${
                      keyboard.id === attr?.selected
                        ? "bg-black text-white "

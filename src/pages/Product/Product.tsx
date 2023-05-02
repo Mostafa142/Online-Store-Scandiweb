@@ -2,10 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 import { useState, useEffect } from "react";
-import {
-  IAttribute,
-  IProducts,
-} from "../../models/interfaces/categories";
+import { IAttribute, IProducts } from "../../models/interfaces/categories";
 import { toast } from "react-toastify";
 import { ATTRIBUTES } from "../../models/enums/attributes";
 import { useDispatch, useSelector } from "react-redux";
@@ -110,7 +107,7 @@ const Product = () => {
             })}
           </div>
 
-          <div className="py-5 w-5/6">
+          <div className="py-5">
             <img
               src={selectedProduct ? selectedProduct : product.gallery[0]}
               alt="product1"
@@ -272,7 +269,7 @@ const Product = () => {
               {data.product.inStock ? (
                 <button
                   onClick={addToCartList}
-                  className="uppercase bg-green text-gray font-raleway w-64 py-2 text-center font-semibold"
+                  className="uppercase border-2 border-green text-green rounded hover:bg-green hover:text-white font-raleway w-64 py-2 text-center font-semibold"
                 >
                   Add To Cart
                 </button>
