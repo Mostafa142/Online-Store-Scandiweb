@@ -40,7 +40,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="flex justify-between py-5 items-center">
-        <div className="md:flex gap-10 items-center hidden">
+        <div className="md:flex gap-10 items-center hidden text-lg font-bold">
           <NavLink to="/">
             <p className="uppercase">All</p>
           </NavLink>
@@ -53,8 +53,8 @@ const Navbar = () => {
         </div>
 
         <img src={logo} alt="LOGO" />
-        <div className="md:flex gap-10 hidden">
-          <CurrencyList currencies={data?.currencies} />
+        <div className="md:flex gap-6 hidden items-center">
+          <CurrencyList currencies={data?.currencies} type="BigScreen" />
           <div className="relative cursor-pointer">
             <div ref={dropdownRef}>
               <img
@@ -68,7 +68,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          {showCart ? <NavCart /> : ""}
+          {showCart ? <NavCart type="BigScreen" /> : ""}
         </div>
 
         <div className="md:hidden flex">
@@ -82,8 +82,8 @@ const Navbar = () => {
       </nav>
 
       {showMenu ? (
-        <div className="flex flex-col items-center md:hidden gap-8">
-          <div className="flex gap-5 items-center ">
+        <div className="flex flex-col items-center md:hidden gap-8 ">
+          <div className="flex gap-5 items-center text-lg font-bold">
             <NavLink to="/">
               <p className="uppercase">All</p>
             </NavLink>
@@ -94,47 +94,22 @@ const Navbar = () => {
               <p className="uppercase">Clothes</p>
             </NavLink>
           </div>
-          <div className="flex gap-10">
-            {/* <div className="flex gap-2 items-center ">
-              <p>$</p>
-              <img
-                src={downArrow}
-                alt="CURRENCY"
-                className="cursor-pointer"
-                onClick={() => setShowCurrency(!showCurrency)}
-              />
-            </div>
-            {showCurrency ? (
-              <div className={`shadow-lg py-2 absolute top-44 z-10 bg-white`}>
-                {currency.map((item) => {
-                  return (
-                    <div
-                      key={item.name}
-                      className="flex font-semibold py-2 px-7 hover:bg-gray cursor-pointer "
-                    >
-                      <p
-                        onClick={() => setShowCurrency(!showCurrency)}
-                      >{`${item.icon} ${item.name}`}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              ""
-            )} */}
+          <div className="flex gap-6 items-center">
+            <CurrencyList currencies={data?.currencies} type="SmallScreen" />
 
-            <div className="relative">
-              <img
-                src={cart}
-                alt="CART"
-                className="cursor-pointer"
-                onClick={() => setShowCart(!showCart)}
-              />
+            <div className="relative cursor-pointer">
+              <div ref={dropdownRef}>
+                <img
+                  src={cart}
+                  alt="CART"
+                  onClick={(e) => handleDropDownFocus(showCart)}
+                />
+              </div>
               <div className="absolute w-5 -top-3 -right-3 rounded-full bg-green text-center text-sm">
                 {cartCounter}
               </div>
             </div>
-            {showCart ? <NavCart /> : ""}
+            {showCart ? <NavCart type="SmallScreen" /> : ""}
           </div>
         </div>
       ) : (

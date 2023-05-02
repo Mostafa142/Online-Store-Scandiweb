@@ -13,11 +13,13 @@ interface Props {
   cartList: IProducts[];
   IncrementItemInCart: (cartItem: IProducts) => void;
   DecrementCartInCart: (cartItem: IProducts) => void;
+  type: string;
 }
 const CartItems: React.FC<Props> = ({
   cartList,
   IncrementItemInCart,
   DecrementCartInCart,
+  type,
 }) => {
   const [confirmDelete, setConfirmDelete] = useState({
     message: "",
@@ -39,7 +41,7 @@ const CartItems: React.FC<Props> = ({
   });
   const deletItem = (item: IProducts) => {
     setConfirmDelete({
-      message: `Are you sure you want to delete ${item.name} from Cart?`,
+      message: `${item.name}?`,
       isLoading: true,
     });
     setDeletedProduct(item);
@@ -62,9 +64,15 @@ const CartItems: React.FC<Props> = ({
           {cartList?.map((item) => {
             return (
               <div key={item.id}>
-                <div className="flex sm:flex-row flex-col sm:items-center gap-10 justify-between py-5 relative">
+                <div
+                  className={`flex sm:flex-row flex-col sm:items-center ${
+                    type === "NavbarCart" ? "gap-3 py-2" : "gap-8 py-5"
+                  }  justify-between  relative`}
+                >
                   <div
-                    className="absolute top-5 right-0 rounded-full  text-center text-sm cursor-pointer z-10"
+                    className={`absolute ${
+                      type === "NavbarCart" ? "top-2" : "top-5"
+                    } right-0 rounded-full text-center text-sm cursor-pointer z-10`}
                     onClick={() => deletItem(item)}
                   >
                     <svg
@@ -85,8 +93,20 @@ const CartItems: React.FC<Props> = ({
                   <div>
                     <div>
                       {/* Header */}
-                      <h3 className="font-bold text-2xl">{item.name}</h3>
-                      <p className="text-2xl">{item.brand}</p>
+                      <h3
+                        className={`font-bold ${
+                          type === "NavbarCart" ? "text-lg" : "text-2xl"
+                        }`}
+                      >
+                        {item.name}
+                      </h3>
+                      <p
+                        className={`${
+                          type === "NavbarCart" ? "text-lg" : "text-2xl"
+                        }`}
+                      >
+                        {item.brand}
+                      </p>
                     </div>
                     {/* Price */}
                     <p className="font-bold text-lg my-2">
@@ -97,29 +117,40 @@ const CartItems: React.FC<Props> = ({
                       )}
                     </p>
                     {/* ATTRIBUTES  */}
-                    <ProductAttributes attributes={item.attributes} />
+                    <ProductAttributes
+                      attributes={item.attributes}
+                      type={type}
+                    />
                   </div>
                   <div className="flex gap-5 font-raleway font-medium text-3xl">
                     <div className="flex flex-col items-center justify-between">
                       <p
                         onClick={() => IncrementItemInCart(item)}
-                        className="uppercase w-10 h-10  border text-4xl text-center cursor-pointer flex content-center justify-center hover:bg-black hover:text-white"
+                        className={`uppercase ${
+                          type === "NavbarCart"
+                            ? "w-8 h-8 text-2xl"
+                            : "w-10 h-10 text-4xl"
+                        }  border  text-center cursor-pointer flex content-center justify-center hover:bg-black hover:text-white`}
                       >
                         +
                       </p>
                       <p>{item.itemCount}</p>
                       <p
                         onClick={() => DecrementCartInCart(item)}
-                        className="uppercase w-10 h-10  border text-4xl text-center cursor-pointer flex content-center justify-center hover:bg-black hover:text-white"
+                        className={`uppercase ${
+                          type === "NavbarCart"
+                            ? "w-8 h-8 text-2xl"
+                            : "w-10 h-10 text-4xl"
+                        }  border  text-center cursor-pointer flex content-center justify-center hover:bg-black hover:text-white`}
                       >
                         -
                       </p>
                     </div>
-                    <ImageGallery gallery={item.gallery} />
+                    <ImageGallery gallery={item.gallery} type={type} />
                   </div>
                 </div>
 
-                <div className="w-full border border-gray"></div>
+                <div className="w-full border my-2 border-green rounded-xl"></div>
               </div>
             );
           })}
