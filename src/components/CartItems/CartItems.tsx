@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteFromCart } from "../../slices/Cart.slice";
 import DeleteConfirmation from "../DeleteConfimation/DeleteConfirmation";
 import { RootState } from "../../store";
+import { toast } from "react-toastify";
 
 interface Props {
   cartList: IProducts[];
@@ -38,7 +39,7 @@ const CartItems: React.FC<Props> = ({
   });
   const deletItem = (item: IProducts) => {
     setConfirmDelete({
-      message: `Are you sure you want to delete ${item.name}?`,
+      message: `Are you sure you want to delete ${item.name} from Cart?`,
       isLoading: true,
     });
     setDeletedProduct(item);
@@ -46,6 +47,7 @@ const CartItems: React.FC<Props> = ({
 
   const confirmedDelete = () => {
     dispatch(deleteFromCart({ cartItem: deletedProduct }));
+    toast.success(`${deletedProduct.name} deleted succefully from Cart.`)
     CloseConfirmationComponent();
   };
 
