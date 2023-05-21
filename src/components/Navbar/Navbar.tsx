@@ -25,18 +25,6 @@ const Navbar = () => {
   console.log("--------------------------");
   console.log(data);
 
-  // Cart Vidiblity
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const handleDropDownFocus = (state: boolean) => {
-    setShowCart(!state);
-  };
-  const handleClickOutsideDropdown = (e: any) => {
-    if (showCart && !dropdownRef.current?.contains(e.target as Node)) {
-      setShowCart(false);
-    }
-  };
-  window.addEventListener("click", handleClickOutsideDropdown);
-
   return (
     <>
       <nav className="flex justify-between py-5 items-center">
@@ -56,11 +44,11 @@ const Navbar = () => {
         <div className="md:flex gap-6 hidden items-center">
           <CurrencyList currencies={data?.currencies} type="BigScreen" />
           <div className="relative cursor-pointer">
-            <div ref={dropdownRef}>
+            <div>
               <img
                 src={cart}
                 alt="CART"
-                onClick={(e) => handleDropDownFocus(showCart)}
+                onClick={() => setShowCart((state) => !state)}
               />
             </div>
             <div className="absolute w-5 -top-3 -right-3 rounded-full bg-green text-center text-sm">
@@ -98,11 +86,11 @@ const Navbar = () => {
             <CurrencyList currencies={data?.currencies} type="SmallScreen" />
 
             <div className="relative cursor-pointer">
-              <div ref={dropdownRef}>
+              <div>
                 <img
                   src={cart}
                   alt="CART"
-                  onClick={(e) => handleDropDownFocus(showCart)}
+                  onClick={(e) => setShowCart((state) => !state)}
                 />
               </div>
               <div className="absolute w-5 -top-3 -right-3 rounded-full bg-green text-center text-sm">
