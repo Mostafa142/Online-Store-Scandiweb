@@ -2,11 +2,14 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import greenCart from "../../assets/images/greenCart.svg";
 import { IProducts } from "../../models/interfaces/categories";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 type Props = {
   data: IProducts[];
 };
 const Card: React.FC<Props> = ({ data }) => {
-  console.log(data);
+  const { currentCurrency } = useSelector((state: RootState) => state.products);
+
   return (
     <>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1">
@@ -41,7 +44,11 @@ const Card: React.FC<Props> = ({ data }) => {
               <div className="py-5">
                 <h2 className="font-normal text-lg">{item.name}</h2>
                 <p className="font-semibold text-lg">
-                  {item.prices[0].currency.symbol + " " + item.prices[0].amount}
+                  {(item as IProducts).prices.map(({ currency, amount }) =>
+                    currency.label === currentCurrency.label ? (
+                      <>{currency.symbol + " " + amount}</>
+                    ) : null
+                  )}
                 </p>
               </div>
             </div>

@@ -2,31 +2,28 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_CERTAIN_PRODUCT } from "../../Queries/Queries";
 import { useState, useEffect } from "react";
-import {
-  IAttribute,
-  IItem,
-  IProducts,
-} from "../../models/interfaces/categories";
+import { IAttribute, IProducts } from "../../models/interfaces/categories";
 import { toast } from "react-toastify";
 import { ATTRIBUTES } from "../../models/enums/attributes";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, incrementCartCounter } from "../../slices/Cart.slice";
 import Alert from "../../components/Alert/Alert";
+import { RootState } from "../../store";
 
 const Product = () => {
   const dispatch = useDispatch();
-  const { cartList, cartCounter } = useSelector(
+  const { cartList } = useSelector(
     (state: { cart: { cartList: IProducts[]; cartCounter: number } }) =>
       state.cart
   );
-  console.log("====================================");
-  console.log(cartList, cartCounter);
-  console.log("====================================");
+  const { currentCurrency } = useSelector((state: RootState) => state.products);
+
   const [selectedProduct, setSelectedProduct] = useState("");
   const [product, setProduct] = useState<IProducts>({
     id: "",
     attributes: [],
     description: "",
+    brand: "",
     gallery: [],
     inStock: false,
     itemCount: 0,
@@ -97,7 +94,7 @@ const Product = () => {
       <div className="grid lg:grid-cols-3 py-5">
         <div className="lg:col-span-2 flex ">
           <div className="flex flex-col gap-5 py-5 pr-5">
-            {data.product.gallery.map((item: any, idx: any) => {
+            {product.gallery.map((item: any, idx: any) => {
               return (
                 <img
                   key={idx}
@@ -110,9 +107,9 @@ const Product = () => {
             })}
           </div>
 
-          <div className="py-5 w-5/6 ">
+          <div className="py-5">
             <img
-              src={selectedProduct ? selectedProduct : data.product.gallery[0]}
+              src={selectedProduct ? selectedProduct : product.gallery[0]}
               alt="product1"
               className="h-5/6 w-full"
             />
@@ -122,14 +119,14 @@ const Product = () => {
         <div className="py-5 ">
           <div>
             <h2 className="font-bold text-2xl text-lightBlack ">
-              {data.product.name}
+              {product.name}
             </h2>
-            <p className="text-3xl text-lightBlack">{data.product.brand}</p>
+            <p className="text-3xl text-lightBlack">{product.brand}</p>
           </div>
           <div className="py-10 font-Roboto">
             {/* ATTRIBUTES  */}
 
-            {data.product.attributes.map((attr: IAttribute) => {
+            {product.attributes.map((attr: IAttribute) => {
               return (
                 <div
                   className="uppercase font-bold pb-2 text-lightBlack"
@@ -145,15 +142,13 @@ const Product = () => {
                             key={color.id}
                             onClick={() => {
                               updateAttributes(color.id, attr.id);
-                              toast.info(
-                                `${attr.name + " " + color.id} Selected`,
-                                {
-                                  autoClose: false,
-                                }
-                              );
                             }}
                             id={color.id}
-                            className={`uppercase border text-sm w-8 h-8  bg-[${color.value}] cursor-pointer border-2 border-[#eee] hover:border-green  `}
+                            className={`uppercase border text-sm w-8 h-8  bg-[${
+                              color.value
+                            }] cursor-pointer border-2 border-[#eee]   ${
+                              color.id === attr.selected ? "border-green" : ""
+                            }`}
                           ></p>
                         ))}
                       </div>
@@ -169,14 +164,12 @@ const Product = () => {
                             <p
                               onClick={() => {
                                 updateAttributes(Capacity.id, attr.id);
-                                toast.info(
-                                  `${attr.name + " " + Capacity.id} Selected`,
-                                  {
-                                    autoClose: false,
-                                  }
-                                );
                               }}
-                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer ${
+                                Capacity.id === attr.selected
+                                  ? "bg-black text-white"
+                                  : ""
+                              }`}
                             >
                               {Capacity.value}
                             </p>
@@ -194,14 +187,12 @@ const Product = () => {
                             <p
                               onClick={() => {
                                 updateAttributes(withPorts.id, attr.id);
-                                toast.info(
-                                  `${attr.name + " " + withPorts.id} Selected`,
-                                  {
-                                    autoClose: false,
-                                  }
-                                );
                               }}
-                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer ${
+                                withPorts.id === attr.selected
+                                  ? "bg-black text-white"
+                                  : ""
+                              } `}
                             >
                               {withPorts.value}
                             </p>
@@ -219,16 +210,12 @@ const Product = () => {
                             <p
                               onClick={() => {
                                 updateAttributes(touchKeyBoard.id, attr.id);
-                                toast.info(
-                                  `${
-                                    attr.name + " " + touchKeyBoard.id
-                                  } Selected`,
-                                  {
-                                    autoClose: false,
-                                  }
-                                );
                               }}
-                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer ${
+                                touchKeyBoard.id === attr.selected
+                                  ? "bg-black text-white"
+                                  : ""
+                              } `}
                             >
                               {touchKeyBoard.value}
                             </p>
@@ -246,14 +233,12 @@ const Product = () => {
                             <p
                               onClick={() => {
                                 updateAttributes(size.id, attr.id);
-                                toast.info(
-                                  `${attr.name + " " + size.id} Selected`,
-                                  {
-                                    autoClose: false,
-                                  }
-                                );
                               }}
-                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer hover:bg-black hover:text-white `}
+                              className={`uppercase w-14 text-center py-2 border text-sm  cursor-pointer ${
+                                size.id === attr.selected
+                                  ? "bg-black text-white"
+                                  : ""
+                              }`}
                             >
                               {size.value}
                             </p>
@@ -264,29 +249,6 @@ const Product = () => {
                   ) : (
                     ""
                   )}
-
-                  {/* {item.items.map((el: IItem) => {
-                    return (
-                      <div
-                        key={el.id}
-                        className={`cursor-pointer border border-black`}
-                      >
-                        <p
-                          className={`uppercase w-14 text-center py-2  m-0.5 text-sm ${
-                            item.name === "Color"
-                              ? `bg-[${el.value}] py-5`
-                              : "bg-transparent hover:bg-black hover:text-white"
-                          }`}
-                        >
-                          {item.name === "Size"
-                            ? el.value
-                            : item.name === "Color"
-                            ? ""
-                            : el.displayValue}
-                        </p>
-                      </div>
-                    );
-                  })} */}
                 </div>
               );
             })}
@@ -295,14 +257,19 @@ const Product = () => {
             <div>
               <p className="uppercase font-bold pb-2 text-lightBlack">price:</p>
               <p className="uppercase  font-bold text-xl font-raleway">
-                {`${data.product.prices[0].currency.symbol} ${data.product.prices[0].amount}`}
+                {(data.product as IProducts).prices.map(
+                  ({ currency, amount }) =>
+                    currency.label === currentCurrency.label ? (
+                      <>{currency.symbol + " " + amount}</>
+                    ) : null
+                )}
               </p>
             </div>
             <div className="py-6">
               {data.product.inStock ? (
                 <button
                   onClick={addToCartList}
-                  className="uppercase bg-green text-gray font-raleway w-64 py-2 text-center font-semibold"
+                  className="uppercase border-2 border-green text-green rounded hover:bg-green hover:text-white font-raleway w-64 py-2 text-center font-semibold"
                 >
                   Add To Cart
                 </button>
